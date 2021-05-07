@@ -1,4 +1,6 @@
+import 'package:chatapp/services/authentication_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -6,6 +8,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  // text field text
+  String _email = '';
+  String _password = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,12 +41,22 @@ class _LoginPageState extends State<LoginPage> {
                     height: 20,
                   ),
                   TextFormField(
+                    onChanged: (value) {
+                      setState(() {
+                        this._email = value;
+                      });
+                    },
                     decoration: const InputDecoration(labelText: 'Email'),
                   ),
                   SizedBox(
                     height: 25,
                   ),
                   TextFormField(
+                    onChanged: (value) {
+                      setState(() {
+                        this._password = value;
+                      });
+                    },
                     decoration: const InputDecoration(labelText: 'Password'),
                   ),
                   SizedBox(
@@ -60,7 +76,11 @@ class _LoginPageState extends State<LoginPage> {
                     height: 25,
                   ),
                   TextButton(
-                    onPressed: null,
+                    onPressed: () {
+                      context
+                          .read<AuthenticationService>()
+                          .signIn(_email.trim(), _password.trim());
+                    },
                     child: Text(
                       'Login',
                       style: TextStyle(
