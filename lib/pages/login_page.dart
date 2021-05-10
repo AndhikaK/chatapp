@@ -1,3 +1,4 @@
+import 'package:chatapp/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -60,7 +61,13 @@ class _LoginPageState extends State<LoginPage> {
                     height: 25,
                   ),
                   TextButton(
-                    onPressed: null,
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomeScreen(),
+                          ));
+                    },
                     child: Text(
                       'Login',
                       style: TextStyle(
