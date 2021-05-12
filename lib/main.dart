@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
 
       //untuk test
       // home: CheckPage(),
-      home: LoginPage(),
+      home: WelcomePage(),
     );
   }
 }
