@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'login_page.dart';
-import 'register_page.dart';
+import 'package:chatapp/pages/login_page.dart';
+import 'package:chatapp/pages/register_page.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
