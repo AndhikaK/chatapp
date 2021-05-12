@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:chatapp/pages/login_page.dart';
+
+import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -32,7 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
             children: <Widget>[
               Expanded(
                 flex: 2,
-                child:Padding(
+                child: Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 36.0, horizontal: 24.0),
                   child: Column(
@@ -148,17 +149,15 @@ class _RegisterPageState extends State<RegisterPage> {
                           width: double.infinity,
                           // ignore: deprecated_member_use
                           child: RaisedButton(
-                            onPressed: (){},
+                            onPressed: () {},
                             color: Colors.red,
                             child: Padding(
                               padding:
-                              const EdgeInsets.symmetric(vertical: 13.0),
+                                  const EdgeInsets.symmetric(vertical: 13.0),
                               child: Text(
                                 "Register",
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16.0
-                                ),
+                                    color: Colors.white, fontSize: 16.0),
                               ),
                             ),
                           ),
@@ -181,13 +180,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context){
+                                    builder: (context) {
                                       return LoginPage();
                                     },
                                   ),
                                 );
                               },
-                              child: Text("Login!",
+                              child: Text(
+                                "Login!",
                                 style: TextStyle(
                                   color: Colors.red,
                                   decoration: TextDecoration.underline,

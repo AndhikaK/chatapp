@@ -1,6 +1,7 @@
-import 'package:chatapp/pages/chat_page.dart';
-import 'package:chatapp/pages/new_group_page.dart';
 import 'package:flutter/material.dart';
+
+import 'chat_page.dart';
+import 'new_group_page.dart';
 
 class NewChat extends StatefulWidget {
   @override

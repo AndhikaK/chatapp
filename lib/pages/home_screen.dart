@@ -1,6 +1,7 @@
-import 'package:chatapp/pages/chat_page.dart';
-import 'package:chatapp/pages/new_chat.dart';
 import 'package:flutter/material.dart';
+
+import 'chat_page.dart';
+import 'new_chat_pages.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

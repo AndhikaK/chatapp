@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:chatapp/pages/login_page.dart';
 import 'package:chatapp/pages/register_page.dart';
+
+import 'login_page.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
@@ -64,11 +64,11 @@ class WelcomePage extends StatelessWidget {
                   children: <Widget>[
                     // ignore: deprecated_member_use
                     RaisedButton(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context){
+                            builder: (context) {
                               return LoginPage();
                             },
                           ),
@@ -76,14 +76,15 @@ class WelcomePage extends StatelessWidget {
                       },
                       child: Text('LOGIN'),
                       textColor: Colors.red,
-                      color: Colors.white,),
+                      color: Colors.white,
+                    ),
                     // ignore: deprecated_member_use
                     RaisedButton(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context){
+                            builder: (context) {
                               return RegisterPage();
                             },
                           ),
@@ -96,8 +97,6 @@ class WelcomePage extends StatelessWidget {
                   ],
                 )
               ],
-            )
-        )
-    );
+            )));
   }
 }

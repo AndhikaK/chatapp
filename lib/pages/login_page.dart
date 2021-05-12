@@ -1,7 +1,8 @@
-import 'package:chatapp/pages/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:chatapp/pages/forgotpassword.dart';
 import 'package:chatapp/pages/register_page.dart';
+
+import 'forgot_password_pages.dart';
+import 'home_screen.dart';
 
 class LoginPage extends StatefulWidget {
   @override

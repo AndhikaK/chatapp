@@ -5,7 +5,7 @@ class ForgotPassword extends StatefulWidget {
   _ForgotPasswordState createState() => _ForgotPasswordState();
 }
 
-class _ForgotPasswordState extends State<ForgotPassword >{
+class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +31,7 @@ class _ForgotPasswordState extends State<ForgotPassword >{
             children: <Widget>[
               Expanded(
                 flex: 2,
-                child:Padding(
+                child: Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 36.0, horizontal: 24.0),
                   child: Column(
@@ -101,17 +101,15 @@ class _ForgotPasswordState extends State<ForgotPassword >{
                           width: double.infinity,
                           // ignore: deprecated_member_use
                           child: RaisedButton(
-                            onPressed: (){},
+                            onPressed: () {},
                             color: Colors.red,
                             child: Padding(
                               padding:
-                              const EdgeInsets.symmetric(vertical: 13.0),
+                                  const EdgeInsets.symmetric(vertical: 13.0),
                               child: Text(
                                 "Send Email",
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16.0
-                                ),
+                                    color: Colors.white, fontSize: 16.0),
                               ),
                             ),
                           ),
