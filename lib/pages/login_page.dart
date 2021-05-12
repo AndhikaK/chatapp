@@ -1,13 +1,14 @@
+import 'package:chatapp/pages/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:hello/forgotpassword.dart';
-import 'package:hello/register_screen.dart';
+import 'package:chatapp/pages/forgotpassword.dart';
+import 'package:chatapp/pages/register_page.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginScreenState extends State<LoginScreen>{
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,8 +92,8 @@ class _LoginScreenState extends State<LoginScreen>{
                             fillColor: Color(0xFFe7edeb),
                             hintText: "Email",
                             prefixIcon: Icon(
-                                Icons.email,
-                            color: Colors.grey[600],
+                              Icons.email,
+                              color: Colors.grey[600],
                             ),
                           ),
                         ),
@@ -153,21 +154,24 @@ class _LoginScreenState extends State<LoginScreen>{
                           // ignore: deprecated_member_use
                           child: RaisedButton(
                             onPressed: (){
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomeScreen(),
-                                  ));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context){
+                                    return HomeScreen();
+                                  },
+                                ),
+                              );
                             },
                             color: Colors.red,
                             child: Padding(
                               padding:
-                                const EdgeInsets.symmetric(vertical: 13.0),
+                              const EdgeInsets.symmetric(vertical: 13.0),
                               child: Text(
                                 "Login",
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16.0
+                                    color: Colors.white,
+                                    fontSize: 16.0
                                 ),
                               ),
                             ),
@@ -189,19 +193,19 @@ class _LoginScreenState extends State<LoginScreen>{
                             InkWell(
                               onTap: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context){
-                                          return RegisterScreen();
-                                        },
-                                    ),
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context){
+                                      return RegisterPage();
+                                    },
+                                  ),
                                 );
                               },
                               child: Text("Register!",
-                              style: TextStyle(
-                                color: Colors.red,
-                                decoration: TextDecoration.underline,
-                              ),
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  decoration: TextDecoration.underline,
+                                ),
                               ),
                             )
                           ],
