@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:chatapp/pages/login_page.dart';
 
-class RegisterPage extends StatefulWidget {
+class ForgotPassword extends StatefulWidget {
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _ForgotPasswordState createState() => _ForgotPasswordState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _ForgotPasswordState extends State<ForgotPassword >{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Create Account",
+                        "Forgot Password",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 24.0,
@@ -51,7 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 5.0,
                       ),
                       Text(
-                        "Register to get started!",
+                        "We will send email to you",
                         style: TextStyle(
                           color: Colors.white60,
                           fontSize: 20.0,
@@ -96,52 +95,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                         SizedBox(
-                          height: 20.0,
-                        ),
-                        TextField(
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: BorderSide.none,
-                            ),
-                            filled: true,
-                            fillColor: Color(0xFFe7edeb),
-                            hintText: "Password",
-                            prefixIcon: Icon(
-                              Icons.lock,
-                              color: Colors.grey[600],
-                            ),
-                            suffixIcon: Icon(
-                              Icons.visibility,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        TextField(
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: BorderSide.none,
-                            ),
-                            filled: true,
-                            fillColor: Color(0xFFe7edeb),
-                            hintText: "Confirm Password",
-                            prefixIcon: Icon(
-                              Icons.lock,
-                              color: Colors.grey[600],
-                            ),
-                            suffixIcon: Icon(
-                              Icons.visibility,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
                           height: 50.0,
                         ),
                         Container(
@@ -154,7 +107,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               padding:
                               const EdgeInsets.symmetric(vertical: 13.0),
                               child: Text(
-                                "Register",
+                                "Send Email",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16.0
@@ -162,39 +115,6 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              "already have an account?",
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
-                            SizedBox(width: 5.0),
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context){
-                                      return LoginPage();
-                                    },
-                                  ),
-                                );
-                              },
-                              child: Text("Login!",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            )
-                          ],
                         ),
                       ],
                     ),
