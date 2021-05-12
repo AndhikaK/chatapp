@@ -1,4 +1,5 @@
 import 'package:chatapp/pages/home_page.dart';
+import 'package:chatapp/checkpage.dart';
 import 'package:chatapp/pages/login_page.dart';
 import 'package:chatapp/pages/welcome_page.dart';
 import 'package:chatapp/services/authentication_service.dart';
