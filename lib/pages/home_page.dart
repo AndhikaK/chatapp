@@ -1,3 +1,4 @@
+import 'package:chatapp/pages/settings_page.dart';
 import 'package:chatapp/pages/welcome_page.dart';
 import 'package:chatapp/services/authentication_service.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class HomePage extends StatelessWidget {
               color: Colors.white,
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => WelcomePage()));
+                    MaterialPageRoute(builder: (context) => SettingsPage()));
               }),
         ],
       ),
