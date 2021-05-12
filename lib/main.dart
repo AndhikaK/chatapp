@@ -29,11 +29,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //andika
-      // home: WelcomePage(),
+      home: WelcomePage(),
 
       //untuk test
       // home: CheckPage(),
-      home: WelcomePage(),
+      home: LoginPage(),
     );
   }
 }
