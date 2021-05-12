@@ -1,18 +1,20 @@
 import 'package:bubble/bubble.dart';
+import 'package:chatapp/element/custom_profile_appbar.dart';
+import 'package:chatapp/pages/detail_profile_page.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Kissuki"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-        ],
+      appBar: CustomProfileAppBar(
+        appBar: AppBar(
+          title: Text('Kissuki'),
+        ),
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => DetailProfilePage()));
+        },
       ),
       body: Column(
         children: [

@@ -1,3 +1,4 @@
+import 'package:chatapp/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 
 import 'chat_page.dart';
@@ -33,7 +34,12 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text("Hello"),
         actions: [
           IconButton(icon: Icon(Icons.search), onPressed: () {}),
-          IconButton(icon: Icon(Icons.more_vert), onPressed: () {})
+          IconButton(
+              icon: Icon(Icons.more_vert),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SettingPage()));
+              })
         ],
       ),
       body: ListView(
