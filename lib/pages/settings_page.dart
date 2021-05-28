@@ -2,6 +2,7 @@ import 'package:chatapp/pages/change_password_page.dart';
 import 'package:chatapp/pages/edit_detail_page.dart';
 import 'package:chatapp/pages/welcome_page.dart';
 import 'package:chatapp/service/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SettingPage extends StatelessWidget {
@@ -46,13 +47,19 @@ class SettingPage extends StatelessWidget {
                             child: AlertDialog(
                               actions: [
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
                                   child: Text(
                                     'No',
                                   ),
                                 ),
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Auth().resetPassword(
+                                        FirebaseAuth.instance.currentUser.email,
+                                        context);
+                                  },
                                   child: Text(
                                     'Yes',
                                   ),
@@ -68,7 +75,7 @@ class SettingPage extends StatelessWidget {
                               content: Container(
                                 height: 40,
                                 child: Text(
-                                  'continue changing the password',
+                                  'change your password?',
                                   style: TextStyle(fontSize: 15),
                                 ),
                               ),
