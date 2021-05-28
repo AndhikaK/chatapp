@@ -17,6 +17,14 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
+  bool _obsecureText = true;
+
+  void _toggle() {
+    setState(() {
+      _obsecureText = !_obsecureText;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // setState(() {});
@@ -114,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           TextFormField(
                             controller: passwordController,
-                            obscureText: true,
+                            obscureText: _obsecureText,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
@@ -127,9 +135,19 @@ class _LoginPageState extends State<LoginPage> {
                                 Icons.lock,
                                 color: Colors.grey[600],
                               ),
-                              suffixIcon: Icon(
-                                Icons.visibility,
-                                color: Colors.grey,
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  _toggle();
+                                },
+                                child: Icon(
+                                    (_obsecureText)
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color:
+                                        /* (_obsecureText)
+                                      ? Colors.grey
+                                      : Colors.red, */
+                                        Colors.black.withOpacity(0.4)),
                               ),
                             ),
                           ),
@@ -170,8 +188,13 @@ class _LoginPageState extends State<LoginPage> {
                               onPressed: () {
                                 Auth().signIn(emailController.text,
                                     passwordController.text, context);
-                                print("ini id nya");
-                                print(FirebaseAuth.instance.currentUser.uid);
+                                /* if (FirebaseAuth.instance.currentUser != null) {
+                                  print(
+                                      FirebaseAuth.instance.currentUser.email);
+                                  print(FirebaseAuth.instance.currentUser.uid);
+                                } */
+                                /* print("ini id nya");
+                                print(FirebaseAuth.instance.currentUser.uid); */
                                 /* Navigator.push(
                                   context,
                                   MaterialPageRoute(

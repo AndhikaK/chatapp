@@ -1,4 +1,5 @@
 import 'package:chatapp/pages/settings_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'chat_page.dart';
@@ -32,7 +33,22 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text("Hello"),
+        title: Row(
+          children: [
+            Text(
+              "Hello ",
+              style: TextStyle(fontSize: 15),
+            ),
+            /* Text(
+              FirebaseAuth.instance.currentUser.email,
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w900),
+            ), */
+          ],
+        ),
+        /* title: Text(
+          FirebaseAuth.instance.currentUser.uid,
+          style: TextStyle(fontSize: 10),
+        ), */
         actions: [
           IconButton(icon: Icon(Icons.search), onPressed: () {}),
           IconButton(

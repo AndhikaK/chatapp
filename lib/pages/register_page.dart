@@ -1,4 +1,5 @@
 import 'package:chatapp/service/auth.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,23 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   // String email, password, confPassword;
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  void validateAndSave() {
+    final FormState form = _formKey.currentState;
+    if (form.validate()) {
+      print('Form is valid');
+    } else {
+      print('Form is invalid');
+    }
+  }
+
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+  TextEditingController confPasswordController = new TextEditingController();
+
   bool _obsecureText = true;
+  bool _obsecureText2 = true;
 
   void _toggle() {
     setState(() {
@@ -20,10 +37,11 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  TextEditingController emailController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
+  void _toggle2() {
+    setState(() {
+      _obsecureText2 = !_obsecureText2;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           TextFormField(
                             controller: passwordController,
-                            obscureText: true,
+                            obscureText: _obsecureText,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
@@ -134,17 +152,28 @@ class _RegisterPageState extends State<RegisterPage> {
                                 Icons.lock,
                                 color: Colors.grey[600],
                               ),
-                              suffixIcon: Icon(
-                                Icons.visibility,
-                                color: Colors.grey,
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  _toggle();
+                                },
+                                child: Icon(
+                                    (_obsecureText)
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color:
+                                        /* (_obsecureText)
+                                      ? Colors.grey
+                                      : Colors.red, */
+                                        Colors.black.withOpacity(0.4)),
                               ),
                             ),
                           ),
                           SizedBox(
                             height: 20.0,
                           ),
-                          TextField(
-                            obscureText: true,
+                          TextFormField(
+                            controller: confPasswordController,
+                            obscureText: _obsecureText2,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
@@ -157,9 +186,19 @@ class _RegisterPageState extends State<RegisterPage> {
                                 Icons.lock,
                                 color: Colors.grey[600],
                               ),
-                              suffixIcon: Icon(
-                                Icons.visibility,
-                                color: Colors.grey,
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  _toggle2();
+                                },
+                                child: Icon(
+                                    (_obsecureText2)
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color:
+                                        /* (_obsecureText)
+                                      ? Colors.grey
+                                      : Colors.red, */
+                                        Colors.black.withOpacity(0.4)),
                               ),
                             ),
                           ),
@@ -171,63 +210,29 @@ class _RegisterPageState extends State<RegisterPage> {
                             // ignore: deprecated_member_use
                             child: RaisedButton(
                               onPressed: () async {
-                                await showGeneralDialog(
-                                    barrierColor: Colors.black.withOpacity(0.5),
-                                    transitionBuilder:
-                                        (context, a1, a2, widget) {
-                                      final curvedValue = Curves.easeInOutBack
-                                              .transform(a1.value) -
-                                          1.0;
-                                      return Transform(
-                                        transform: Matrix4.translationValues(
-                                            0.0, curvedValue * 200, 0.0),
-                                        child: Opacity(
-                                          opacity: a1.value,
-                                          child: AlertDialog(
-                                            shape: OutlineInputBorder(
-                                                borderSide: BorderSide.none,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        16.0)),
-                                            title: Text(
-                                              'Create account success',
-                                              style: TextStyle(fontSize: 19),
-                                            ),
-                                            content: Container(
-                                              height: 100,
-                                              child: Column(
-                                                children: [
-                                                  Icon(
-                                                    Icons.check_circle_outline,
-                                                    color: Colors.lightGreen,
-                                                    size: 60,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 15,
-                                                  ),
-                                                  Text(
-                                                    'Please sign in',
-                                                    style:
-                                                        TextStyle(fontSize: 15),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    transitionDuration:
-                                        Duration(milliseconds: 200),
-                                    barrierDismissible: true,
-                                    barrierLabel: '',
-                                    context: context,
-                                    pageBuilder:
-                                        // ignore: missing_return
-                                        (context, animation1, animation2) {});
-                                Auth().signUp(emailController.text,
-                                    passwordController.text, context);
-                                Navigator.pop(context);
+                                if (passwordController.text.isNotEmpty &&
+                                    passwordController.text !=
+                                        confPasswordController.text) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text('Password does not match')));
+                                } else {
+                                  Auth().signUp(emailController.text,
+                                      passwordController.text, context);
+                                }
+
+                                /* else {
+                                  
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text('Processing Data')));
+                                } */
+
+                                /* Auth().signUp(emailController.text,
+                                    passwordController.text, context); */
+                                // await buildShowGeneralDialog(context);
+                                // Navigator.pop(context);
                               },
                               color: Colors.red,
                               child: Padding(
@@ -286,5 +291,54 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+
+  Future<Object> buildShowGeneralDialog(BuildContext context) {
+    return showGeneralDialog(
+        barrierColor: Colors.black.withOpacity(0.5),
+        transitionBuilder: (context, a1, a2, widget) {
+          final curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
+          return Transform(
+            transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+            child: Opacity(
+              opacity: a1.value,
+              child: AlertDialog(
+                shape: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(16.0)),
+                title: Text(
+                  'Create account success',
+                  style: TextStyle(fontSize: 19),
+                ),
+                content: Container(
+                  height: 100,
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.check_circle_outline,
+                        color: Colors.lightGreen,
+                        size: 60,
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        'Please sign in',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+        transitionDuration: Duration(milliseconds: 200),
+        barrierDismissible: true,
+        barrierLabel: '',
+        context: context,
+        pageBuilder:
+            // ignore: missing_return
+            (context, animation1, animation2) {});
   }
 }

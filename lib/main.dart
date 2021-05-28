@@ -38,6 +38,9 @@ class _WrapperState extends State<Wrapper> {
 
     // setState(() {});
     if (auth.currentUser != null) {
+      print(FirebaseAuth.instance.currentUser.email);
+      print(FirebaseAuth.instance.currentUser.uid);
+
       print("sedang login");
 
       return HomeScreen();

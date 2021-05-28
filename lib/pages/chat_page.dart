@@ -10,6 +10,7 @@ class ChatPage extends StatelessWidget {
       appBar: CustomProfileAppBar(
         appBar: AppBar(
           title: Text('Kissuki'),
+          backgroundColor: Colors.red,
         ),
         onTap: () {
           Navigator.push(context,
