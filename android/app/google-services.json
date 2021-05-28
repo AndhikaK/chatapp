@@ -1,31 +1,39 @@
 {
-    "project_info": {
-        "project_number": "323147756826",
-        "project_id": "hello-259c6",
-        "storage_bucket": "hello-259c6.appspot.com"
-    },
-    "client": [{
-        "client_info": {
-            "mobilesdk_app_id": "1:323147756826:android:65a408a9ecb9a03144a8a3",
-            "android_client_info": {
-                "package_name": "com.hello.chatapp"
-            }
-        },
-        "oauth_client": [{
-            "client_id": "323147756826-kdmar66fgfjningll40lcosslbqjq3nr.apps.googleusercontent.com",
-            "client_type": 3
-        }],
-        "api_key": [{
-            "current_key": "AIzaSyDqIl3EsvEtnALkFaRgBvaaCFdkZuSdWqI"
-        }],
-        "services": {
-            "appinvite_service": {
-                "other_platform_oauth_client": [{
-                    "client_id": "323147756826-kdmar66fgfjningll40lcosslbqjq3nr.apps.googleusercontent.com",
-                    "client_type": 3
-                }]
-            }
+  "project_info": {
+    "project_number": "323147756826",
+    "project_id": "hello-259c6",
+    "storage_bucket": "hello-259c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323147756826:android:65a408a9ecb9a03144a8a3",
+        "android_client_info": {
+          "package_name": "com.hello.chatapp"
         }
-    }],
-    "configuration_version": "1"
+      },
+      "oauth_client": [
+        {
+          "client_id": "323147756826-kdmar66fgfjningll40lcosslbqjq3nr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqIl3EsvEtnALkFaRgBvaaCFdkZuSdWqI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323147756826-kdmar66fgfjningll40lcosslbqjq3nr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
 }

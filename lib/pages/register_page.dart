@@ -170,12 +170,64 @@ class _RegisterPageState extends State<RegisterPage> {
                             width: double.infinity,
                             // ignore: deprecated_member_use
                             child: RaisedButton(
-                              onPressed: () {
-                                // Firebase.initializeApp();
+                              onPressed: () async {
+                                await showGeneralDialog(
+                                    barrierColor: Colors.black.withOpacity(0.5),
+                                    transitionBuilder:
+                                        (context, a1, a2, widget) {
+                                      final curvedValue = Curves.easeInOutBack
+                                              .transform(a1.value) -
+                                          1.0;
+                                      return Transform(
+                                        transform: Matrix4.translationValues(
+                                            0.0, curvedValue * 200, 0.0),
+                                        child: Opacity(
+                                          opacity: a1.value,
+                                          child: AlertDialog(
+                                            shape: OutlineInputBorder(
+                                                borderSide: BorderSide.none,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        16.0)),
+                                            title: Text(
+                                              'Create account success',
+                                              style: TextStyle(fontSize: 19),
+                                            ),
+                                            content: Container(
+                                              height: 100,
+                                              child: Column(
+                                                children: [
+                                                  Icon(
+                                                    Icons.check_circle_outline,
+                                                    color: Colors.lightGreen,
+                                                    size: 60,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 15,
+                                                  ),
+                                                  Text(
+                                                    'Please sign in',
+                                                    style:
+                                                        TextStyle(fontSize: 15),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    transitionDuration:
+                                        Duration(milliseconds: 200),
+                                    barrierDismissible: true,
+                                    barrierLabel: '',
+                                    context: context,
+                                    pageBuilder:
+                                        // ignore: missing_return
+                                        (context, animation1, animation2) {});
                                 Auth().signUp(emailController.text,
                                     passwordController.text, context);
                                 Navigator.pop(context);
-                                // Navigator.pop(context);
                               },
                               color: Colors.red,
                               child: Padding(
