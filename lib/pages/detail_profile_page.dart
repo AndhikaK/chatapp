@@ -53,7 +53,7 @@ class DetailProfilePage extends StatelessWidget {
             Container(
               padding: EdgeInsets.only(left: 20.0, top: 15, bottom: 15),
               alignment: Alignment.centerLeft,
-              child: Text('@kissuki_21',
+              child: Text('* Id',
                   style: TextStyle(
                       color: Colors.black38, fontWeight: FontWeight.bold)),
             ),

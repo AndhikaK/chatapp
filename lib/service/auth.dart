@@ -1,3 +1,4 @@
+import 'package:chatapp/service/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class Auth {
     try {
       FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      Database().addUser(email);
       await showGeneralDialog(
           barrierColor: Colors.black.withOpacity(0.5),
           transitionBuilder: (context, a1, a2, widget) {
@@ -57,6 +59,7 @@ class Auth {
           pageBuilder:
               // ignore: missing_return
               (context, animation1, animation2) {});
+      logOut(buildContext);
       Navigator.pop(buildContext);
       // Navigator.pop(context);
       // User userDetail = userCredential.user;
@@ -263,7 +266,7 @@ class Auth {
               // ignore: missing_return
               (context, animation1, animation2) {});
       // logOut(buildContext);
-
+      Navigator.pop(buildContext);
     } on FirebaseAuthException catch (e) {
       //
       if (email.isEmpty) {

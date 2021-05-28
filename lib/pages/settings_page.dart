@@ -1,4 +1,5 @@
 import 'package:chatapp/pages/change_password_page.dart';
+import 'package:chatapp/pages/detail_profile_page.dart';
 import 'package:chatapp/pages/edit_detail_page.dart';
 import 'package:chatapp/pages/welcome_page.dart';
 import 'package:chatapp/service/auth.dart';
@@ -22,9 +23,10 @@ class SettingPage extends StatelessWidget {
                 title: Text('Profile'),
                 onTap: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditDetailPage()));
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DetailProfilePage()),
+                  );
                 },
               ),
             ),
