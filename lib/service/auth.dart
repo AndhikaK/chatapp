@@ -263,6 +263,7 @@ class Auth {
               // ignore: missing_return
               (context, animation1, animation2) {});
       // logOut(buildContext);
+
     } on FirebaseAuthException catch (e) {
       //
       if (email.isEmpty) {

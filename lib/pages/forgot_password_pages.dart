@@ -1,4 +1,5 @@
 import 'package:chatapp/service/auth.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -106,8 +107,20 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           // ignore: deprecated_member_use
                           child: RaisedButton(
                             onPressed: () async {
-                              Auth().forgotPassword(
-                                  _emailController.text, context);
+                              if (_emailController.text.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text('email is still empty')));
+                              } else if (EmailValidator.validate(
+                                  _emailController.text)) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(
+                                            'Please enter a valid email')));
+                              } else {
+                                Auth().forgotPassword(
+                                    _emailController.text, context);
+                              }
                             },
                             color: Colors.red,
                             child: Padding(
