@@ -172,6 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                                   "Forgot your password?",
                                   style: TextStyle(
                                     color: Colors.red,
+                                    fontWeight: FontWeight.w700,
                                     decoration: TextDecoration.underline,
                                   ),
                                 ),
@@ -244,6 +245,7 @@ class _LoginPageState extends State<LoginPage> {
                                   "Register!",
                                   style: TextStyle(
                                     color: Colors.red,
+                                    fontWeight: FontWeight.w700,
                                     decoration: TextDecoration.underline,
                                   ),
                                 ),

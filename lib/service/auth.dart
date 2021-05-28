@@ -212,6 +212,57 @@ class Auth {
             (context, animation1, animation2) {});
     logOut(buildContext);
   }
+
+  forgotPassword(String email, BuildContext buildContext) async {
+    auth.sendPasswordResetEmail(email: email);
+    await showGeneralDialog(
+        barrierColor: Colors.black.withOpacity(0.5),
+        transitionBuilder: (context, a1, a2, widget) {
+          final curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
+          return Transform(
+            transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+            child: Opacity(
+              opacity: a1.value,
+              child: AlertDialog(
+                shape: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(16.0)),
+                title: Text(
+                  'Password reset',
+                  style: TextStyle(fontSize: 19),
+                ),
+                content: Container(
+                  height: 100,
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.check_circle_outline,
+                        color: Colors.lightGreen,
+                        size: 60,
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        'Please check your email',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+        transitionDuration: Duration(milliseconds: 200),
+        barrierDismissible: true,
+        barrierLabel: '',
+        context: buildContext,
+        pageBuilder:
+            // ignore: missing_return
+            (context, animation1, animation2) {});
+    // logOut(buildContext);
+  }
 }
 
 class RestartWidget extends StatefulWidget {
