@@ -214,54 +214,69 @@ class Auth {
   }
 
   forgotPassword(String email, BuildContext buildContext) async {
-    auth.sendPasswordResetEmail(email: email);
-    await showGeneralDialog(
-        barrierColor: Colors.black.withOpacity(0.5),
-        transitionBuilder: (context, a1, a2, widget) {
-          final curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
-          return Transform(
-            transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
-            child: Opacity(
-              opacity: a1.value,
-              child: AlertDialog(
-                shape: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(16.0)),
-                title: Text(
-                  'Password reset',
-                  style: TextStyle(fontSize: 19),
-                ),
-                content: Container(
-                  height: 100,
-                  child: Column(
-                    children: [
-                      Icon(
-                        Icons.check_circle_outline,
-                        color: Colors.lightGreen,
-                        size: 60,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        'Please check your email',
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ],
+    try {
+      auth.sendPasswordResetEmail(email: email);
+      await showGeneralDialog(
+          barrierColor: Colors.black.withOpacity(0.5),
+          transitionBuilder: (context, a1, a2, widget) {
+            final curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
+            return Transform(
+              transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+              child: Opacity(
+                opacity: a1.value,
+                child: AlertDialog(
+                  shape: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(16.0)),
+                  title: Text(
+                    'Password reset',
+                    style: TextStyle(fontSize: 19),
+                  ),
+                  content: Container(
+                    height: 100,
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.check_circle_outline,
+                          color: Colors.lightGreen,
+                          size: 60,
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Text(
+                          'Please check your email',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        },
-        transitionDuration: Duration(milliseconds: 200),
-        barrierDismissible: true,
-        barrierLabel: '',
-        context: buildContext,
-        pageBuilder:
-            // ignore: missing_return
-            (context, animation1, animation2) {});
-    // logOut(buildContext);
+            );
+          },
+          transitionDuration: Duration(milliseconds: 200),
+          barrierDismissible: true,
+          barrierLabel: '',
+          context: buildContext,
+          pageBuilder:
+              // ignore: missing_return
+              (context, animation1, animation2) {});
+      // logOut(buildContext);
+    } on FirebaseAuthException catch (e) {
+      //
+      if (email.isEmpty) {
+        ScaffoldMessenger.of(buildContext)
+            .showSnackBar(SnackBar(content: Text('email is still empty')));
+      } else if (e.code == 'invalid-email') {
+        ScaffoldMessenger.of(buildContext).showSnackBar(
+            SnackBar(content: Text('Please enter a valid email')));
+      } else {
+        print(e);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }
 

@@ -1,3 +1,4 @@
+import 'package:chatapp/service/auth.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -6,6 +7,8 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  TextEditingController _emailController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,6 +82,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         TextField(
+                          controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -101,7 +105,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           width: double.infinity,
                           // ignore: deprecated_member_use
                           child: RaisedButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              Auth().forgotPassword(
+                                  _emailController.text, context);
+                            },
                             color: Colors.red,
                             child: Padding(
                               padding:
