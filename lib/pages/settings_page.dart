@@ -1,5 +1,6 @@
 import 'package:chatapp/pages/edit_detail_page.dart';
 import 'package:chatapp/pages/welcome_page.dart';
+import 'package:chatapp/service/auth.dart';
 import 'package:flutter/material.dart';
 
 class SettingPage extends StatelessWidget {
@@ -37,8 +38,9 @@ class SettingPage extends StatelessWidget {
                 leading: Icon(Icons.logout),
                 title: Text('Logout'),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => WelcomePage()));
+                  Auth().logOut(context);
+                  /* Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => WelcomePage())); */
                 },
               ),
             )

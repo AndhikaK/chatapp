@@ -1,3 +1,5 @@
+import 'package:chatapp/service/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/pages/register_page.dart';
 
@@ -10,8 +12,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    // setState(() {});
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -78,140 +86,149 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        TextField(
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: BorderSide.none,
-                            ),
-                            filled: true,
-                            fillColor: Color(0xFFe7edeb),
-                            hintText: "Email",
-                            prefixIcon: Icon(
-                              Icons.email,
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        TextField(
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: BorderSide.none,
-                            ),
-                            filled: true,
-                            fillColor: Color(0xFFe7edeb),
-                            hintText: "Password",
-                            prefixIcon: Icon(
-                              Icons.lock,
-                              color: Colors.grey[600],
-                            ),
-                            suffixIcon: Icon(
-                              Icons.visibility,
-                              color: Colors.grey,
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          TextFormField(
+                            controller: emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
+                              fillColor: Color(0xFFe7edeb),
+                              hintText: "Email",
+                              prefixIcon: Icon(
+                                Icons.email,
+                                color: Colors.grey[600],
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          TextFormField(
+                            controller: passwordController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
+                              fillColor: Color(0xFFe7edeb),
+                              hintText: "Password",
+                              prefixIcon: Icon(
+                                Icons.lock,
+                                color: Colors.grey[600],
+                              ),
+                              suffixIcon: Icon(
+                                Icons.visibility,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return ForgotPassword();
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  "Forgot your password?",
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 50.0,
+                          ),
+                          Container(
+                            width: double.infinity,
+                            // ignore: deprecated_member_use
+                            child: RaisedButton(
+                              onPressed: () {
+                                Auth().signIn(emailController.text,
+                                    passwordController.text, context);
+                                print("ini id nya");
+                                print(FirebaseAuth.instance.currentUser.uid);
+                                /* Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return ForgotPassword();
+                                      return HomeScreen();
                                     },
                                   ),
-                                );
+                                ); */
                               },
-                              child: Text(
-                                "Forgot your password?",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  decoration: TextDecoration.underline,
+                              color: Colors.red,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 13.0),
+                                child: Text(
+                                  "Login",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16.0),
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 50.0,
-                        ),
-                        Container(
-                          width: double.infinity,
-                          // ignore: deprecated_member_use
-                          child: RaisedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return HomeScreen();
-                                  },
-                                ),
-                              );
-                            },
-                            color: Colors.red,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 13.0),
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 16.0),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              "didn't have account yet?",
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
-                            SizedBox(width: 5.0),
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return RegisterPage();
-                                    },
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                "Register!",
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                "didn't have account yet?",
                                 style: TextStyle(
-                                  color: Colors.red,
-                                  decoration: TextDecoration.underline,
+                                  color: Colors.black,
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                      ],
+                              SizedBox(width: 5.0),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return RegisterPage();
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  "Register!",
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

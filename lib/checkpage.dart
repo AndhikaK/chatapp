@@ -1,3 +1,4 @@
+import 'package:chatapp/pages/change_password_page.dart';
 import 'package:chatapp/pages/chat_page.dart';
 import 'package:chatapp/pages/home_screen.dart';
 import 'package:chatapp/pages/new_chat_pages.dart';
@@ -10,7 +11,7 @@ class CheckPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ElevatedButton(
               onPressed: () {
@@ -55,6 +56,17 @@ class CheckPage extends StatelessWidget {
                 );
               },
               child: Text("Chat Page Screen"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChangePassword(),
+                  ),
+                );
+              },
+              child: Text("Change Password Page"),
             ),
           ],
         ),
