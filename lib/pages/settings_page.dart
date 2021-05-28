@@ -44,6 +44,20 @@ class SettingPage extends StatelessWidget {
                           child: Opacity(
                             opacity: a1.value,
                             child: AlertDialog(
+                              actions: [
+                                TextButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    'No',
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    'Yes',
+                                  ),
+                                ),
+                              ],
                               shape: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(16.0)),
@@ -52,22 +66,10 @@ class SettingPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 19),
                               ),
                               content: Container(
-                                height: 100,
-                                child: Column(
-                                  children: [
-                                    Icon(
-                                      Icons.check_circle_outline,
-                                      color: Colors.lightGreen,
-                                      size: 60,
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Text(
-                                      'Please check your email',
-                                      style: TextStyle(fontSize: 15),
-                                    ),
-                                  ],
+                                height: 40,
+                                child: Text(
+                                  'continue changing the password',
+                                  style: TextStyle(fontSize: 15),
                                 ),
                               ),
                             ),
