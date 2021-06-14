@@ -1,3 +1,4 @@
+import 'package:chatapp/service/custom_localization.dart';
 import 'package:flutter/material.dart';
 
 class NewGroup extends StatelessWidget {
@@ -16,7 +17,7 @@ class NewGroup extends StatelessWidget {
       ),
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text("New Group"),
+        title: Text(CustomLocalizations.of(context).newGroupText),
       ),
       body: Column(
         children: [
@@ -68,7 +69,7 @@ class NewGroup extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             color: Colors.grey[350],
             child: Text(
-              "Select from contact",
+              CustomLocalizations.of(context).selectFromContactText,
               style: TextStyle(
                   fontSize: 8,
                   fontWeight: FontWeight.bold,

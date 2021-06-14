@@ -61,8 +61,7 @@ class Auth {
               (context, animation1, animation2) {});
       logOut(buildContext);
       Navigator.pop(buildContext);
-      // Navigator.pop(context);
-      // User userDetail = userCredential.user;
+
       print("berhasil daftar");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

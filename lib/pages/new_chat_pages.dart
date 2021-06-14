@@ -1,4 +1,5 @@
 import 'package:chatapp/pages/new_contact_page.dart';
+import 'package:chatapp/service/custom_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'chat_page.dart';
@@ -25,7 +26,7 @@ class _NewChatState extends State<NewChat> {
       ),
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text("New Chat"),
+        title: Text(CustomLocalizations.of(context).newChatText),
         actions: [
           IconButton(icon: Icon(Icons.search), onPressed: () {}),
           IconButton(icon: Icon(Icons.more_vert), onPressed: () {})
@@ -101,7 +102,7 @@ class _NewChatState extends State<NewChat> {
                 Container(
                   child: ListTile(
                     leading: Icon(Icons.person),
-                    title: Text('New Group'),
+                    title: Text(CustomLocalizations.of(context).newGroupText),
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => NewGroup()));
@@ -117,7 +118,7 @@ class _NewChatState extends State<NewChat> {
                 Container(
                   child: ListTile(
                     leading: Icon(Icons.person),
-                    title: Text('New Contact'),
+                    title: Text(CustomLocalizations.of(context).newContactText),
                     onTap: () {
                       Navigator.push(
                           context,
@@ -134,7 +135,7 @@ class _NewChatState extends State<NewChat> {
             width: MediaQuery.of(context).size.width,
             color: Colors.grey[350],
             child: Text(
-              "Select from contact",
+              CustomLocalizations.of(context).selectFromContactText,
               style: TextStyle(
                   fontSize: 8,
                   fontWeight: FontWeight.bold,

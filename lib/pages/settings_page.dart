@@ -1,8 +1,9 @@
-import 'package:chatapp/pages/change_password_page.dart';
+// import 'package:chatapp/pages/change_password_page.dart';
 import 'package:chatapp/pages/detail_profile_page.dart';
-import 'package:chatapp/pages/edit_detail_page.dart';
-import 'package:chatapp/pages/welcome_page.dart';
+// import 'package:chatapp/pages/edit_detail_page.dart';
+// import 'package:chatapp/pages/welcome_page.dart';
 import 'package:chatapp/service/auth.dart';
+import 'package:chatapp/service/custom_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class SettingPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text('Settings'),
+        title: Text(CustomLocalizations.of(context).settingsText),
       ),
       body: Container(
         child: ListView(
@@ -20,7 +21,7 @@ class SettingPage extends StatelessWidget {
             Container(
               child: ListTile(
                 leading: Icon(Icons.person),
-                title: Text('Profile'),
+                title: Text(CustomLocalizations.of(context).profileText),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -33,7 +34,7 @@ class SettingPage extends StatelessWidget {
             Container(
               child: ListTile(
                 leading: Icon(Icons.vpn_key),
-                title: Text('Change password'),
+                title: Text(CustomLocalizations.of(context).changePasswordText),
                 onTap: () async {
                   // ChangePassword();
                   await showGeneralDialog(
@@ -53,7 +54,7 @@ class SettingPage extends StatelessWidget {
                                     Navigator.pop(context);
                                   },
                                   child: Text(
-                                    'No',
+                                    CustomLocalizations.of(context).noText,
                                   ),
                                 ),
                                 TextButton(
@@ -63,7 +64,7 @@ class SettingPage extends StatelessWidget {
                                         context);
                                   },
                                   child: Text(
-                                    'Yes',
+                                    CustomLocalizations.of(context).yesText,
                                   ),
                                 ),
                               ],
@@ -71,13 +72,15 @@ class SettingPage extends StatelessWidget {
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(16.0)),
                               title: Text(
-                                'Password reset',
+                                CustomLocalizations.of(context)
+                                    .passwordResetText,
                                 style: TextStyle(fontSize: 19),
                               ),
                               content: Container(
                                 height: 40,
                                 child: Text(
-                                  'change your password?',
+                                  CustomLocalizations.of(context)
+                                      .changeYourPasswordText,
                                   style: TextStyle(fontSize: 15),
                                 ),
                               ),
@@ -98,7 +101,7 @@ class SettingPage extends StatelessWidget {
             Container(
               child: ListTile(
                 leading: Icon(Icons.logout),
-                title: Text('Logout'),
+                title: Text(CustomLocalizations.of(context).logoutText),
                 onTap: () {
                   Auth().logOut(context);
                   /* Navigator.push(context,

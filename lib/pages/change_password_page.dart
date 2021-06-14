@@ -71,6 +71,7 @@ Future _showDialog(BuildContext context) async {
         title: new Text("Alert!!"),
         content: new Text("You are awesome!"),
         actions: <Widget>[
+          // ignore: deprecated_member_use
           new FlatButton(
             child: new Text("OK"),
             onPressed: () {

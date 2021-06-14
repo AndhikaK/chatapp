@@ -1,10 +1,11 @@
 import 'package:chatapp/service/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:chatapp/service/custom_localization.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/pages/register_page.dart';
 
 import 'forgot_password_pages.dart';
-import 'home_screen.dart';
+// import 'home_screen.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -59,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Welcome",
+                        CustomLocalizations.of(context).loginPageMessage1,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 24.0,
@@ -70,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: 5.0,
                       ),
                       Text(
-                        "Login to continue!",
+                        CustomLocalizations.of(context).loginPageMessage2,
                         style: TextStyle(
                           color: Colors.white60,
                           fontSize: 20.0,
@@ -169,7 +170,8 @@ class _LoginPageState extends State<LoginPage> {
                                   );
                                 },
                                 child: Text(
-                                  "Forgot your password?",
+                                  CustomLocalizations.of(context)
+                                      .forgotPasswordText,
                                   style: TextStyle(
                                     color: Colors.red,
                                     fontWeight: FontWeight.w700,
@@ -210,7 +212,7 @@ class _LoginPageState extends State<LoginPage> {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 13.0),
                                 child: Text(
-                                  "Login",
+                                  CustomLocalizations.of(context).login,
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 16.0),
                                 ),
@@ -224,7 +226,8 @@ class _LoginPageState extends State<LoginPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                "didn't have account yet?",
+                                CustomLocalizations.of(context)
+                                    .dontHaveAccountText,
                                 style: TextStyle(
                                   color: Colors.black,
                                 ),
@@ -242,7 +245,8 @@ class _LoginPageState extends State<LoginPage> {
                                   );
                                 },
                                 child: Text(
-                                  "Register!",
+                                  CustomLocalizations.of(context).register +
+                                      '!',
                                   style: TextStyle(
                                     color: Colors.red,
                                     fontWeight: FontWeight.w700,

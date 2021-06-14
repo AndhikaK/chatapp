@@ -1,3 +1,4 @@
+import 'package:chatapp/service/custom_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/pages/register_page.dart';
 
@@ -34,7 +35,7 @@ class WelcomePage extends StatelessWidget {
                   height: 130.0,
                 ),
                 Text(
-                  "Connect",
+                  CustomLocalizations.of(context).welcomeMessage1,
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -42,18 +43,21 @@ class WelcomePage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "With Everyone",
+                  CustomLocalizations.of(context).welcomeMessage2,
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 23.0,
                   ),
                 ),
+                SizedBox(
+                  height: 5,
+                ),
                 Text(
-                  "Don’t forget to say Hello to people you love!",
+                  CustomLocalizations.of(context).welcomeMessage3,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 13.0,
+                    fontSize: 12.0,
                   ),
                 ),
                 SizedBox(
@@ -74,7 +78,8 @@ class WelcomePage extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Text('LOGIN'),
+                      child: Text(
+                          CustomLocalizations.of(context).login.toUpperCase()),
                       textColor: Colors.red,
                       color: Colors.white,
                     ),
@@ -90,7 +95,9 @@ class WelcomePage extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Text('REGISTER'),
+                      child: Text(CustomLocalizations.of(context)
+                          .register
+                          .toUpperCase()),
                       textColor: Colors.red,
                       color: Colors.white,
                     ),

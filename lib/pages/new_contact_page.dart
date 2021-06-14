@@ -1,3 +1,4 @@
+import 'package:chatapp/service/custom_localization.dart';
 import 'package:flutter/material.dart';
 
 class NewContactPage extends StatefulWidget {
@@ -11,7 +12,9 @@ class _NewContactPageState extends State<NewContactPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text('New Contact'),
+        title: Text(
+          CustomLocalizations.of(context).newContactText,
+        ),
       ),
       body: Container(
         padding: EdgeInsets.all(20),
@@ -36,13 +39,14 @@ class _NewContactPageState extends State<NewContactPage> {
             ),
             Container(
               width: double.infinity,
+              // ignore: deprecated_member_use
               child: RaisedButton(
                 onPressed: () {},
                 color: Colors.red,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 13.0),
                   child: Text(
-                    "Add",
+                    CustomLocalizations.of(context).addText,
                     style: TextStyle(color: Colors.white, fontSize: 16.0),
                   ),
                 ),

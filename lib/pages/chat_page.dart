@@ -1,6 +1,7 @@
 import 'package:bubble/bubble.dart';
 import 'package:chatapp/element/custom_profile_appbar.dart';
 import 'package:chatapp/pages/detail_profile_page.dart';
+import 'package:chatapp/service/custom_localization.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {
@@ -35,7 +36,7 @@ class ChatPage extends StatelessWidget {
                     clock: "17:02",
                   ),
                   TimeMessage(
-                    time: "Today",
+                    time: CustomLocalizations.of(context).todayText,
                   ),
                   SendMessage(
                     chat: "Hello",
@@ -46,7 +47,7 @@ class ChatPage extends StatelessWidget {
                     clock: "17:02",
                   ),
                   TimeMessage(
-                    time: "Yesterday",
+                    time: CustomLocalizations.of(context).yesterdayText,
                   ),
                 ],
               ),
@@ -62,7 +63,7 @@ class ChatPage extends StatelessWidget {
                 filled: true,
                 fillColor: Colors.grey[300],
                 contentPadding: EdgeInsets.fromLTRB(18, 5, 8, 5),
-                hintText: "Message here...",
+                hintText: CustomLocalizations.of(context).messageHereText,
                 hintStyle: TextStyle(fontSize: 13, color: Colors.grey[500]),
                 suffixIcon: IconButton(
                     icon: Icon(
@@ -86,6 +87,7 @@ class ChatPage extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class TimeMessage extends StatefulWidget {
   String time;
   TimeMessage({Key key, this.time}) : super(key: key);
@@ -106,6 +108,7 @@ class _TimeMessageState extends State<TimeMessage> {
   }
 }
 
+// ignore: must_be_immutable
 class ReceiveMessage extends StatefulWidget {
   String chat, clock;
 
@@ -140,6 +143,7 @@ class _ReceiveMessageState extends State<ReceiveMessage> {
   }
 }
 
+// ignore: must_be_immutable
 class SendMessage extends StatefulWidget {
   String chat, clock;
 

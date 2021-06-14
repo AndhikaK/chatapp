@@ -1,13 +1,18 @@
+import 'package:chatapp/service/custom_localization.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class DetailProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    CollectionReference _users = FirebaseFirestore.instance.collection('users');
+    String _currentEmail = FirebaseAuth.instance.currentUser.email;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.redAccent,
           elevation: 0,
-          title: Text('Profile'),
+          title: Text(CustomLocalizations.of(context).profileText),
         ),
         body: Column(
           children: [
@@ -22,29 +27,31 @@ class DetailProfilePage extends StatelessWidget {
               ),
             ),
             Container(
-                decoration: BoxDecoration(color: Colors.redAccent),
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(left: 20.0, bottom: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Kissuki',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 25),
-                    ),
-                    Text(
-                      'Joined since 32 May 2022',
-                      style: TextStyle(color: Colors.white),
-                    )
-                  ],
-                )),
+              decoration: BoxDecoration(color: Colors.redAccent),
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(left: 20.0, bottom: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Kissuki',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 25),
+                  ),
+                  Text(
+                    CustomLocalizations.of(context).joinedSinceText +
+                        ' 32 May 2022',
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              ),
+            ),
             Container(
               padding: EdgeInsets.only(left: 20.0, top: 15),
               alignment: Alignment.centerLeft,
-              child: Text('Contact info',
+              child: Text(CustomLocalizations.of(context).contactInfoText,
                   style: TextStyle(
                       color: Colors.red,
                       fontWeight: FontWeight.bold,

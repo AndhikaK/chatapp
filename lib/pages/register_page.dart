@@ -1,6 +1,7 @@
 import 'package:chatapp/service/auth.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:chatapp/service/custom_localization.dart';
+// import 'package:email_validator/email_validator.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'login_page.dart';
@@ -76,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Create Account",
+                        CustomLocalizations.of(context).registerPageMessage1,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 24.0,
@@ -87,7 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 5.0,
                       ),
                       Text(
-                        "Register to get started!",
+                        CustomLocalizations.of(context).registerPageMessage2,
                         style: TextStyle(
                           color: Colors.white60,
                           fontSize: 20.0,
@@ -147,7 +148,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                               filled: true,
                               fillColor: Color(0xFFe7edeb),
-                              hintText: "Password",
+                              hintText:
+                                  CustomLocalizations.of(context).passwordText,
                               prefixIcon: Icon(
                                 Icons.lock,
                                 color: Colors.grey[600],
@@ -181,7 +183,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                               filled: true,
                               fillColor: Color(0xFFe7edeb),
-                              hintText: "Confirm Password",
+                              hintText: CustomLocalizations.of(context)
+                                  .confirmPasswordText,
                               prefixIcon: Icon(
                                 Icons.lock,
                                 color: Colors.grey[600],
@@ -213,10 +216,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                 if (passwordController.text.isNotEmpty &&
                                     passwordController.text !=
                                         confPasswordController.text) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content:
-                                              Text('Password does not match')));
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                          content: Text(
+                                    CustomLocalizations.of(context)
+                                        .confirmPasswordMessage,
+                                  )));
                                 } else {
                                   Auth().signUp(emailController.text,
                                       passwordController.text, context);
@@ -239,7 +244,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 13.0),
                                 child: Text(
-                                  "Register",
+                                  CustomLocalizations.of(context).register,
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 16.0),
                                 ),
@@ -253,7 +258,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                "already have an account?",
+                                CustomLocalizations.of(context).haveAccountText,
                                 style: TextStyle(
                                   color: Colors.black,
                                 ),
@@ -271,7 +276,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   );
                                 },
                                 child: Text(
-                                  "Login!",
+                                  CustomLocalizations.of(context).login,
                                   style: TextStyle(
                                     color: Colors.red,
                                     decoration: TextDecoration.underline,
@@ -307,7 +312,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.circular(16.0)),
                 title: Text(
-                  'Create account success',
+                  CustomLocalizations.of(context).signUpMessage1,
                   style: TextStyle(fontSize: 19),
                 ),
                 content: Container(
@@ -323,7 +328,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 15,
                       ),
                       Text(
-                        'Please sign in',
+                        CustomLocalizations.of(context).signUpMessage2,
                         style: TextStyle(fontSize: 15),
                       ),
                     ],
