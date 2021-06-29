@@ -235,7 +235,7 @@ class _LoginPageState extends State<LoginPage> {
                               SizedBox(width: 5.0),
                               InkWell(
                                 onTap: () {
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) {

@@ -266,7 +266,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               SizedBox(width: 5.0),
                               InkWell(
                                 onTap: () {
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) {
