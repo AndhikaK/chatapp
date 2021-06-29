@@ -33,6 +33,7 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter
+  google_sign_in: ^5.0.4
 
 dev_dependencies:
   flutter_test:
