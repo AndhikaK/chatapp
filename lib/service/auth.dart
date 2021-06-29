@@ -2,6 +2,7 @@ import 'package:chatapp/service/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Auth {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -13,6 +14,7 @@ class Auth {
       FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       Database().addUser(email);
+
       await showGeneralDialog(
           barrierColor: Colors.black.withOpacity(0.5),
           transitionBuilder: (context, a1, a2, widget) {
@@ -154,6 +156,37 @@ class Auth {
       } else {
         print(e.code);
       }
+    }
+  }
+
+  // login with google account
+  // im not sure if its  gonna work, but we gotta see xD
+  // the architecture is so different from the one at FLutterfire docs
+  // dang
+  signInWithGoogle(BuildContext buildContext) async {
+    try {
+      final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      print("Access token: ${googleAuth.accessToken}");
+      print("Id token: ${googleAuth.idToken}");
+
+      await FirebaseAuth.instance.signInWithCredential(credential);
+
+      Future.delayed(const Duration(milliseconds: 500), () {
+        RestartWidget.restartApp(buildContext);
+      });
+    } on FirebaseAuthException catch (e) {
+      print("login-google-error: ${e.code}");
+      ScaffoldMessenger.of(buildContext)
+          .showSnackBar(SnackBar(content: Text('Cant login with google')));
     }
   }
 
