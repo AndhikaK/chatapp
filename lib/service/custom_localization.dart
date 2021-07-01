@@ -49,8 +49,11 @@ class CustomLocalizations {
       'passwordResetText': 'Password reset',
       'changeYourPasswordText': 'change your password?',
       'logoutText': 'Logout',
-      'joinedSinceText': 'Joined since',
+      'joinedSinceText': 'Joined since ',
       'contactInfoText': 'Contact info',
+      'yournameText': 'Your Name',
+      'aboutText': 'About',
+      'saveText': 'Save',
     },
     'id': {
       'login': 'Masuk',
@@ -88,8 +91,11 @@ class CustomLocalizations {
       'passwordResetText': 'Atur ulang password',
       'changeYourPasswordText': 'ubah password?',
       'logoutText': 'Keluar',
-      'joinedSinceText': 'Bergabung sejak',
+      'joinedSinceText': 'Bergabung sejak ',
       'contactInfoText': 'Info kontak',
+      'yournameText': 'Nama anda',
+      'aboutText': 'Tentang',
+      'saveText': 'Simpan',
     },
   };
 
@@ -239,6 +245,18 @@ class CustomLocalizations {
 
   String get contactInfoText {
     return _resources[locale.languageCode]['contactInfoText'];
+  }
+
+  String get yourNameText {
+    return _resources[locale.languageCode]['yournameText'];
+  }
+
+  String get aboutText {
+    return _resources[locale.languageCode]['aboutText'];
+  }
+
+  String get saveText {
+    return _resources[locale.languageCode]['saveText'];
   }
 }
 
