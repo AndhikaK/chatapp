@@ -176,7 +176,6 @@ class _LoginPageState extends State<LoginPage> {
                                   style: TextStyle(
                                     color: Colors.red,
                                     fontWeight: FontWeight.w700,
-                                    decoration: TextDecoration.underline,
                                   ),
                                 ),
                               )
@@ -251,11 +250,22 @@ class _LoginPageState extends State<LoginPage> {
                                   style: TextStyle(
                                     color: Colors.red,
                                     fontWeight: FontWeight.w700,
-                                    decoration: TextDecoration.underline,
                                   ),
                                 ),
                               )
                             ],
+                          ),
+                          SizedBox(
+                            height: 30.0,
+                          ),
+                          Text(
+                            "or sign in with",
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20.0,
                           ),
                           GoogleSignInButton(),
                         ],

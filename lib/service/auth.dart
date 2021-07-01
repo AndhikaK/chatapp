@@ -163,6 +163,8 @@ class Auth {
   // im not sure if its  gonna work, but we gotta see xD
   // the architecture is so different from the one at FLutterfire docs
   // dang
+  // but it work
+  // pog
   signInWithGoogle(BuildContext buildContext) async {
     try {
       final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
@@ -175,14 +177,14 @@ class Auth {
         idToken: googleAuth.idToken,
       );
 
-      print("Access token: ${googleAuth.accessToken}");
-      print("Id token: ${googleAuth.idToken}");
-
       await FirebaseAuth.instance.signInWithCredential(credential);
 
       Future.delayed(const Duration(milliseconds: 500), () {
         RestartWidget.restartApp(buildContext);
       });
+
+      ScaffoldMessenger.of(buildContext)
+          .showSnackBar(SnackBar(content: Text('Login success!')));
     } on FirebaseAuthException catch (e) {
       print("login-google-error: ${e.code}");
       ScaffoldMessenger.of(buildContext)
