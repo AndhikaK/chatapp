@@ -1,3 +1,4 @@
+import 'package:chatapp/pages/waiting_page.dart';
 import 'package:chatapp/service/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,13 +10,13 @@ class Auth {
 
   //FirebaseApp helloApp = Firebase.app('Hello Apps');
 
-  signUp(String email, String password, BuildContext buildContext) async {
+  Future signUp(
+      String email, String password, BuildContext buildContext) async {
     try {
       FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      Database().addUser(email);
 
-      await showGeneralDialog(
+      /* await showGeneralDialog(
           barrierColor: Colors.black.withOpacity(0.5),
           transitionBuilder: (context, a1, a2, widget) {
             final curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
@@ -60,9 +61,17 @@ class Auth {
           context: buildContext,
           pageBuilder:
               // ignore: missing_return
-              (context, animation1, animation2) {});
-      logOut(buildContext);
-      Navigator.pop(buildContext);
+              (context, animation1, animation2) {}); */
+      Navigator.push(
+          buildContext,
+          MaterialPageRoute(
+            builder: (context) => WaitingPage(),
+          ));
+      Future.delayed(const Duration(milliseconds: 1500), () {
+        Navigator.pop(buildContext);
+        Navigator.pop(buildContext);
+        Database().addUser(email);
+      });
 
       print("berhasil daftar");
     } on FirebaseAuthException catch (e) {
@@ -137,7 +146,8 @@ class Auth {
     }
   }
 
-  signIn(String email, String password, BuildContext buildContext) async {
+  Future signIn(
+      String email, String password, BuildContext buildContext) async {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
@@ -190,7 +200,7 @@ class Auth {
     }
   }
 
-  logOut(BuildContext buildContext) async {
+  Future logOut(BuildContext buildContext) async {
     await FirebaseAuth.instance.signOut();
     Future.delayed(const Duration(milliseconds: 500), () {
       RestartWidget.restartApp(buildContext);

@@ -31,7 +31,7 @@ class NewGroup extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.fromLTRB(10, 7, 7, 7),
                     child: Text(
-                      "Add Group Participants",
+                      CustomLocalizations.of(context).addGroupParticipantsText,
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                   ),
@@ -43,7 +43,8 @@ class NewGroup extends StatelessWidget {
                       style: TextStyle(fontSize: 20),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.fromLTRB(8, 5, 8, 5),
-                        hintText: "Type Contact Name",
+                        hintText:
+                            CustomLocalizations.of(context).typeContactNameText,
                         hintStyle: TextStyle(fontSize: 20),
                         suffixIcon: IconButton(
                             icon: Icon(

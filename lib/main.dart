@@ -32,32 +32,22 @@ class MyApp extends StatelessWidget {
 
       // home: WelcomePage(),
       // home: CheckPage(),
-      home: Wrapper(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.active) {
+            return Center(child: CircularProgressIndicator());
+          }
+          final user = snapshot.data;
+          if (user != null) {
+            print('akun masuk');
+            return HomeScreen();
+          } else {
+            print('akun belum masuk');
+            return WelcomePage();
+          }
+        },
+      ),
     );
-  }
-}
-
-class Wrapper extends StatefulWidget {
-  @override
-  _WrapperState createState() => _WrapperState();
-}
-
-class _WrapperState extends State<Wrapper> {
-  @override
-  Widget build(BuildContext context) {
-    FirebaseAuth auth = FirebaseAuth.instance;
-
-    // setState(() {});
-    if (auth.currentUser != null) {
-      print(FirebaseAuth.instance.currentUser.email);
-      print(FirebaseAuth.instance.currentUser.uid);
-
-      print("sedang login");
-
-      return HomeScreen();
-    } else {
-      print("tidak sedang login");
-      return WelcomePage();
-    }
   }
 }
