@@ -1,5 +1,6 @@
 import 'package:chatapp/service/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class GoogleSignInButton extends StatefulWidget {
   @override
@@ -9,7 +10,7 @@ class GoogleSignInButton extends StatefulWidget {
 class _GoogleSignInButtonState extends State<GoogleSignInButton> {
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
+    return OutlinedButton.icon(
       onPressed: () {
         // context.read<AuthenticationServices>().signInWithGoogle();
         Auth().signInWithGoogle(context);
@@ -22,7 +23,17 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
           ),
         ),
       ),
-      child: Text("Sign In with Google"),
+      icon: SvgPicture.asset(
+        'assets/svg/google-icon.svg',
+        height: 20,
+        width: 20,
+      ),
+      label: Text(
+        "Sign In with Google",
+        style: TextStyle(
+          color: Colors.black,
+        ),
+      ),
     );
   }
 }
