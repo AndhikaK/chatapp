@@ -237,7 +237,7 @@ class Auth {
                         size: 60,
                       ),
                       SizedBox(
-                        height: 15,
+                        height: 14,
                       ),
                       Text(
                         'Please check your email',
