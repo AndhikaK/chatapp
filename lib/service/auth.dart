@@ -241,7 +241,7 @@ class Auth {
                       ),
                       Text(
                         'Please check your email',
-                        style: TextStyle(fontSize: 15),
+                        style: TextStyle(fontSize: 14),
                       ),
                     ],
                   ),
