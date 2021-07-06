@@ -1,4 +1,4 @@
-import 'package:chatapp/pages/change_password_page.dart';
+import 'package:chatapp/pages/settings/change_password_page.dart';
 import 'package:chatapp/pages/chat_page.dart';
 import 'package:chatapp/pages/home_screen.dart';
 import 'package:chatapp/pages/new_chat_pages.dart';

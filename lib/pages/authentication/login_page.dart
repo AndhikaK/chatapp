@@ -3,7 +3,7 @@ import 'package:chatapp/service/custom_localization.dart';
 import 'package:chatapp/widgets/google_sign_in_button.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:chatapp/pages/register_page.dart';
+import 'package:chatapp/pages/authentication/register_page.dart';
 
 import 'forgot_password_pages.dart';
 // import 'home_screen.dart';
