@@ -1,6 +1,6 @@
 import 'package:bubble/bubble.dart';
 import 'package:chatapp/element/custom_profile_appbar.dart';
-import 'package:chatapp/pages/chat_profile_page.dart';
+import 'package:chatapp/pages/chat/chat_profile_page.dart';
 import 'package:chatapp/pages/detail_profile_page.dart';
 import 'package:chatapp/service/custom_localization.dart';
 import 'package:flutter/material.dart';
