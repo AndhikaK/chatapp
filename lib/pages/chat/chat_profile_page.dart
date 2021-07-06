@@ -51,7 +51,7 @@ class _ChatProfilePageState extends State<ChatProfilePage> {
                                 MaterialPageRoute(builder: (_) {
                               return ProfileImgFullView(
                                 imageUrl: "assets/img/cute.jpeg",
-                                tag: "generate_a_unique_tag",
+                                tag: "profile_img",
                               );
                             }));
                           },

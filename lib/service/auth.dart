@@ -189,6 +189,9 @@ class Auth {
 
       await FirebaseAuth.instance.signInWithCredential(credential);
 
+      Database()
+          .addGoogleRegisteredUser(FirebaseAuth.instance.currentUser.email);
+
       Future.delayed(const Duration(milliseconds: 500), () {
         RestartWidget.restartApp(buildContext);
       });
