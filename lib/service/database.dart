@@ -12,8 +12,9 @@ class Database {
     return _users.doc(name).set({
       'name': name,
       'email': name,
+      'profile-img': "",
       'about': 'Hello Apps',
-      'createdAt': DateTime.now()
+      'createdAt': DateTime.now(),
     });
   }
 

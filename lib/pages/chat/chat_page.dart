@@ -15,8 +15,12 @@ class ChatPage extends StatelessWidget {
           backgroundColor: Colors.red,
         ),
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ChatProfilePage()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ChatProfilePage(
+                        email: "frostsword21@gmail.com",
+                      )));
         },
       ),
       body: Column(
