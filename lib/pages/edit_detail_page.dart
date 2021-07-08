@@ -24,7 +24,7 @@ class _EditDetailPageState extends State<EditDetailPage> {
   TextEditingController _aboutController = new TextEditingController();
   TextEditingController imageInputController;
 
-  void createData() async {
+  /* void createData() async {
     DateTime now = DateTime.now();
     String nuevoformato = DateFormat('kk:mm:ss:MMMMd').format(now);
     var fullImageName = 'nomfoto-$nuevoformato' + '.jpg';
@@ -53,7 +53,7 @@ class _EditDetailPageState extends State<EditDetailPage> {
         image = null;
       });
     }
-  }
+  } */
 
   pickerCam() async {
     PickedFile img = await ImagePicker().getImage(source: ImageSource.camera);
