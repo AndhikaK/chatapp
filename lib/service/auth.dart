@@ -1,5 +1,6 @@
 import 'package:chatapp/pages/waiting_page.dart';
 import 'package:chatapp/service/database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -189,8 +190,37 @@ class Auth {
 
       await FirebaseAuth.instance.signInWithCredential(credential);
 
-      Database()
-          .addGoogleRegisteredUser(FirebaseAuth.instance.currentUser.email);
+      User _currentUser = FirebaseAuth.instance.currentUser;
+
+      // print(Database().getAbout(_currentUser.email));
+      try {
+        var ref = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(_currentUser.email)
+            .get();
+        if (ref.exists) {
+          print("data exist on firestore");
+        } else {
+          print("data does not exist on firestore T_T");
+          Database()
+              .addGoogleRegisteredUser(FirebaseAuth.instance.currentUser.email);
+        }
+      } catch (e) {
+        print("Login error: ${e}");
+
+        Database()
+            .addGoogleRegisteredUser(FirebaseAuth.instance.currentUser.email);
+      }
+
+      // var accCreationTime = _currentUser.metadata.creationTime;
+      // var lastSignedInTime = _currentUser.metadata.lastSignInTime;
+      // print("Login: cretion time -> ${accCreationTime}");
+      // print("Login: last sign in -> ${_currentUser.metadata.lastSignInTime}");
+      // if (lastSignedInTime
+      //     .isBefore(accCreationTime.add(Duration(seconds: 10)))) {
+      //   Database()
+      //       .addGoogleRegisteredUser(FirebaseAuth.instance.currentUser.email);
+      // }
 
       Future.delayed(const Duration(milliseconds: 500), () {
         RestartWidget.restartApp(buildContext);
