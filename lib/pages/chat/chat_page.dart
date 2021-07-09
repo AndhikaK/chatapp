@@ -1,17 +1,38 @@
 import 'package:bubble/bubble.dart';
 import 'package:chatapp/element/custom_profile_appbar.dart';
 import 'package:chatapp/pages/chat/chat_profile_page.dart';
-import 'package:chatapp/pages/detail_profile_page.dart';
 import 'package:chatapp/service/custom_localization.dart';
+import 'package:chatapp/service/database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
+  String name, about, email;
+  ChatPage({this.name, this.about, this.email});
+
+  @override
+  _ChatPageState createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  TextEditingController _chatController = new TextEditingController();
+  FirebaseAuth _user = FirebaseAuth.instance;
+  String _currentUser = FirebaseAuth.instance.currentUser.email;
+  String _receiverUser;
+  @override
+  void initState() {
+    _receiverUser = widget.email;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomProfileAppBar(
         appBar: AppBar(
-          title: Text('Kissuki'),
+          title: Text(widget.name),
           backgroundColor: Colors.red,
         ),
         onTap: () {
@@ -28,8 +49,63 @@ class ChatPage extends StatelessWidget {
           Expanded(
             child: Container(
               padding: EdgeInsets.only(bottom: 10),
-              // color: Colors.green,
-              child: ListView(
+              child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(_currentUser)
+                      .collection('chatroom')
+                      .doc(_receiverUser)
+                      .collection('chat')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+
+                    return ListView(
+                      children: snapshot.data.docs.map((document) {
+                        return Center(
+                          child: Container(
+                            child: SendMessage(
+                                chat: document["message"],
+                                clock: document["createdAt"]
+                                    .toDate()
+                                    .toString()
+                                    .substring(11, 16)),
+                          ),
+                        );
+
+                        /* (document is Map &&
+                                document['sender'].toString() == _currentUser)
+                            ? Center(
+                                child: Container(
+                                  child: SendMessage(
+                                      chat: document["message"],
+                                      clock: document["createdAt"]
+                                          .toDate()
+                                          .toString()
+                                          .substring(11, 16)),
+                                ),
+                              )
+                            : Center(
+                                child: Container(
+                                  child: ReceiveMessage(
+                                    chat: document["message"],
+                                    clock: document["createdAt"]
+                                        .toDate()
+                                        .toString()
+                                        .substring(11, 16),
+                                  ),
+                                ),
+                              ); */
+                      }).toList(),
+                    );
+                  }),
+
+              /* ListView(
                 reverse: true,
                 children: [
                   SendMessage(
@@ -55,13 +131,14 @@ class ChatPage extends StatelessWidget {
                     time: CustomLocalizations.of(context).yesterdayText,
                   ),
                 ],
-              ),
+              ), */
             ),
           ),
           Container(
             height: 80,
             padding: EdgeInsets.fromLTRB(8, 15, 8, 15),
             child: TextFormField(
+              controller: _chatController,
               cursorColor: Colors.red,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               decoration: InputDecoration(
@@ -75,7 +152,15 @@ class ChatPage extends StatelessWidget {
                       Icons.send,
                       color: Colors.red,
                     ),
-                    onPressed: () {}),
+                    onPressed: () {
+                      Database().sendMessage(_chatController.text,
+                          _user.currentUser.email, widget.email);
+                      Database().receiveMessage(_chatController.text,
+                          _user.currentUser.email, widget.email);
+                      setState(() {
+                        _chatController.clear();
+                      });
+                    }),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(45),
                     borderSide: BorderSide(width: 1, color: Colors.grey[500])),

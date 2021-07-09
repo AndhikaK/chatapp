@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:chatapp/service/custom_localization.dart';
 import 'package:chatapp/service/database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditDetailPage extends StatefulWidget {
   String email, name, about;
@@ -11,10 +16,60 @@ class EditDetailPage extends StatefulWidget {
 }
 
 class _EditDetailPageState extends State<EditDetailPage> {
+  File image;
+  String filename;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextEditingController _nameController = new TextEditingController();
   TextEditingController _aboutController = new TextEditingController();
+  TextEditingController imageInputController;
+
+  /* void createData() async {
+    DateTime now = DateTime.now();
+    String nuevoformato = DateFormat('kk:mm:ss:MMMMd').format(now);
+    var fullImageName = 'nomfoto-$nuevoformato' + '.jpg';
+    var fullImageName2 = 'nomfoto-$nuevoformato' + '.jpg';
+
+    FirebaseAuth _auth = FirebaseAuth.instance;
+
+    final Reference ref = FirebaseStorage.instance.ref().child(fullImageName);
+    // ignore: unused_local_variable
+    final UploadTask task = ref.putFile(image);
+
+    var part1 =
+        'https://firebasestorage.googleapis.com/v0/b/insta-app-8bc64.appspot.com/o/';
+
+    var fullPathImage = part1 + fullImageName2;
+    print(fullPathImage);
+
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      DocumentReference ref = await db
+          .collection('photos')
+          .add({'name': _auth.currentUser.email, 'image': '$fullPathImage'});
+      setState(() => id = ref.id);
+      Future.delayed(const Duration(seconds: 1), () {
+        Navigator.of(context).pop(); //regrese a la pantalla anterior
+        image = null;
+      });
+    }
+  } */
+
+  pickerCam() async {
+    PickedFile img = await ImagePicker().getImage(source: ImageSource.camera);
+    if (img != null) {
+      image = File(img.path);
+      setState(() {});
+    }
+  }
+
+  pickerGallery() async {
+    PickedFile img = await ImagePicker().getImage(source: ImageSource.gallery);
+    if (img != null) {
+      image = File(img.path);
+      setState(() {});
+    }
+  }
 
   @override
   void initState() {
@@ -71,7 +126,7 @@ class _EditDetailPageState extends State<EditDetailPage> {
                 Container(
                   child: ListTile(
                     title: TextFormField(
-                      initialValue: _nameController.text,
+                      controller: _nameController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderSide: BorderSide.none,
@@ -95,7 +150,7 @@ class _EditDetailPageState extends State<EditDetailPage> {
                 Container(
                   child: ListTile(
                     title: TextFormField(
-                      initialValue: _aboutController.text,
+                      controller: _aboutController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderSide: BorderSide.none,
@@ -110,6 +165,7 @@ class _EditDetailPageState extends State<EditDetailPage> {
                     onPressed: () async {
                       await Database().editUser(widget.email,
                           _nameController.text, _aboutController.text);
+                      Navigator.pop(context);
                       Navigator.pop(context);
                     },
                     child: Text('save'))

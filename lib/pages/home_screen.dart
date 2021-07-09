@@ -1,4 +1,6 @@
 import 'package:chatapp/pages/settings/settings_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -59,7 +61,34 @@ class _HomeScreenState extends State<HomeScreen> {
               })
         ],
       ),
-      body: ListView(
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('users').snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            return ListView(
+              children: snapshot.data.docs.map((document) {
+                return Center(
+                  child: Container(
+                    child: (document['email'] !=
+                            FirebaseAuth.instance.currentUser.email)
+                        ? HomeChatBox(
+                            name: document['name'],
+                            about: document['about'],
+                            email: document['email'],
+                          )
+                        : Container(),
+                  ),
+                );
+              }).toList(),
+            );
+          }),
+      /* ListView(
         children: [
           HomeChatBox(),
           HomeChatBox(),
@@ -68,12 +97,15 @@ class _HomeScreenState extends State<HomeScreen> {
           HomeChatBox(),
           HomeChatBox(),
         ],
-      ),
+      ), */
     );
   }
 }
 
 class HomeChatBox extends StatefulWidget {
+  String name, about, email;
+  HomeChatBox({this.name, this.about, this.email});
+
   @override
   _HomeChatBoxState createState() => _HomeChatBoxState();
 }
@@ -92,7 +124,11 @@ class _HomeChatBoxState extends State<HomeChatBox> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ChatPage(),
+                    builder: (context) => ChatPage(
+                      name: widget.name,
+                      about: widget.about,
+                      email: widget.email,
+                    ),
                   ));
             },
             child: Row(
@@ -107,7 +143,7 @@ class _HomeChatBoxState extends State<HomeChatBox> {
                       color: Colors.red,
                       child: Center(
                         child: Text(
-                          "KI",
+                          widget.name.substring(0, 2).toUpperCase(),
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -125,9 +161,12 @@ class _HomeChatBoxState extends State<HomeChatBox> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Kisuki",
+                            widget.name,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w700),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black.withOpacity(0.8)),
                           ),
                           Container(
                             width: 70,
@@ -157,7 +196,8 @@ class _HomeChatBoxState extends State<HomeChatBox> {
                         height: 5,
                       ),
                       Text(
-                        "Wanna play a game?",
+                        widget.about,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(color: Colors.grey[600], fontSize: 12),
                       ),
                     ],
