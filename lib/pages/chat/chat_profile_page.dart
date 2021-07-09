@@ -25,7 +25,6 @@ class _ChatProfilePageState extends State<ChatProfilePage> {
             .collection('users')
             .doc(widget.email)
             .snapshots();
-    // String _targetEmail = widget.email;
 
     return Scaffold(
       appBar: AppBar(

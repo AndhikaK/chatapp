@@ -25,7 +25,8 @@ class Database {
       'name': _currentUser.displayName,
       'email': email,
       'about': 'Hello Apps',
-      'createdAt': DateTime.now()
+      'createdAt': DateTime.now(),
+      'profile-img': "",
     });
   }
 
@@ -35,6 +36,14 @@ class Database {
     return _users.doc(email).update({
       'name': name,
       'about': about,
+    });
+  }
+
+  Future editProfileImg(String imgUrl) async {
+    CollectionReference _users = _firestore.collection('users');
+
+    return _users.doc(_currentUser.email).update({
+      'profile-img': imgUrl,
     });
   }
 

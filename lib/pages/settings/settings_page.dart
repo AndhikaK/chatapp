@@ -1,6 +1,7 @@
 // import 'package:chatapp/pages/change_password_page.dart';
 import 'package:chatapp/pages/detail_profile_page.dart';
 import 'package:chatapp/pages/edit_detail_page.dart';
+import 'package:chatapp/pages/settings/settings_detail_user_page.dart';
 // import 'package:chatapp/pages/edit_detail_page.dart';
 // import 'package:chatapp/pages/welcome_page.dart';
 import 'package:chatapp/service/auth.dart';
@@ -29,11 +30,7 @@ class SettingPage extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => EditDetailPage(
-                                email: currentUser.email,
-                                name: currentUser.displayName,
-                                about: "none",
-                              )));
+                          builder: (context) => SettingsDetailUserPage()));
                 },
               ),
             ),
