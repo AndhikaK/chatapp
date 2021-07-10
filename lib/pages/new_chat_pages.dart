@@ -1,5 +1,8 @@
+import 'package:chatapp/pages/new_chat/contact_widget.dart';
 import 'package:chatapp/pages/new_contact_page.dart';
 import 'package:chatapp/service/custom_localization.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'chat/chat_page.dart';
@@ -11,8 +14,16 @@ class NewChat extends StatefulWidget {
 }
 
 class _NewChatState extends State<NewChat> {
+  final User _currentUser = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
+    final Stream<QuerySnapshot> _friendsStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(_currentUser.email)
+        .collection('friends')
+        .snapshots();
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         elevation: 5,
@@ -81,89 +92,32 @@ class _NewChatState extends State<NewChat> {
             ),
           ),
           Expanded(
-            child: ListView(
-              children: [
-                NewChatBox(),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+            child: StreamBuilder(
+                stream: _friendsStream,
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Something went wrong');
+                  }
 
-class NewChatBox extends StatefulWidget {
-  @override
-  _NewChatBoxState createState() => _NewChatBoxState();
-}
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Text("Loading");
+                  }
 
-class _NewChatBoxState extends State<NewChatBox> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8),
-      width: MediaQuery.of(context).size.width,
-      height: 80,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Container(
-                margin: EdgeInsets.only(right: 7),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.red,
-                    child: Center(
-                      child: Text(
-                        "KI",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ChatPage(),
-                      ));
-                },
-                child: Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Kisuki",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w700),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Wanna play a game?",
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(50, 7, 0, 0),
-            height: 1,
-            width: MediaQuery.of(context).size.width - 50,
-            color: Colors.grey[350],
+                  return new ListView(
+                    children:
+                        snapshot.data.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic> data =
+                          document.data() as Map<String, dynamic>;
+                      return new ContactWidget(
+                        name: data['name'],
+                        email: data['email'],
+                        profileImage: data['profile-img'],
+                        signature: data['signature'],
+                      );
+                    }).toList(),
+                  );
+                }),
           ),
         ],
       ),

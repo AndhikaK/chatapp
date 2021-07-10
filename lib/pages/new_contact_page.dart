@@ -17,6 +17,7 @@ class _NewContactPageState extends State<NewContactPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.red,
         title: Text(
@@ -31,26 +32,9 @@ class _NewContactPageState extends State<NewContactPage> {
             children: [
               TextFormField(
                 controller: _searchUserController,
+                autofocus: true,
                 onFieldSubmitted: (value) async {
-                  print(value);
-                  try {
-                    var ref = await FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(value)
-                        .get();
-
-                    if (ref.exists) {
-                      print("data exist on firestore");
-                      setState(() {
-                        _userContact = ref.data();
-                      });
-                    } else {
-                      print("data does not exist on firestore T_T");
-                      setState(() {
-                        _userContact = null;
-                      });
-                    }
-                  } catch (e) {}
+                  await searchContact(value);
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -59,11 +43,30 @@ class _NewContactPageState extends State<NewContactPage> {
                   ),
                   filled: true,
                   fillColor: Color(0xFFe7edeb),
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      _searchUserController.text = "";
-                    },
-                    child: Icon(Icons.clear),
+                  suffixIcon: Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween, // added line
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _searchUserController.text = "";
+                          setState(() {
+                            _userContact = null;
+                          });
+                        },
+                        child: Icon(Icons.clear),
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          await searchContact(_searchUserController.text);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10, left: 10),
+                          child: Icon(Icons.search),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -125,27 +128,52 @@ class _NewContactPageState extends State<NewContactPage> {
                             _userContact['email'],
                             style: TextStyle(color: Colors.grey),
                           ),
+                          SizedBox(height: 20),
+                          ElevatedButton(
+                              onPressed: () {
+                                addContact();
+                              },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.red[700]),
+                              ),
+                              child: Text("Add Contact")),
                         ],
                       ),
                     ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                  onPressed: () {
-                    try {
-                      print("add contact success");
-                      Database().addContact(_userContact);
-                    } catch (e) {
-                      print("add contact failed : $e");
-                    }
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.red[700]),
-                  ),
-                  child: Text("Add Contact")),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future searchContact(String value) async {
+    print(value);
+    try {
+      var ref =
+          await FirebaseFirestore.instance.collection('users').doc(value).get();
+
+      if (ref.exists) {
+        print("data exist on firestore");
+        setState(() {
+          _userContact = ref.data();
+        });
+      } else {
+        print("data does not exist on firestore T_T");
+        setState(() {
+          _userContact = null;
+        });
+      }
+    } catch (e) {}
+  }
+
+  void addContact() {
+    try {
+      print("add contact success");
+      Database().addContact(_userContact);
+    } catch (e) {
+      print("add contact failed : $e");
+    }
   }
 }
