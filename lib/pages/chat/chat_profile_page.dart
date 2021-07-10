@@ -28,6 +28,7 @@ class _ChatProfilePageState extends State<ChatProfilePage> {
       appBar: AppBar(
         title: Text('Profile'),
         backgroundColor: Colors.red[400],
+        elevation: 0,
       ),
       body: StreamBuilder(
         stream: _targetProfile,
@@ -42,7 +43,9 @@ class _ChatProfilePageState extends State<ChatProfilePage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             print("connection waiting : ${snapshot}");
 
-            return Text("Loading");
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }
 
           print("success : ${snapshot.data['profile-img']}");
@@ -63,11 +66,8 @@ class _ChatProfilePageState extends State<ChatProfilePage> {
                           child: ImageFiltered(
                             imageFilter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
                             child: snapshot.data['profile-img'] == ""
-                                ? Image.asset(
-                                    "assets/img/cute.jpeg",
-                                    height: 140,
-                                    width: 140,
-                                    fit: BoxFit.cover,
+                                ? Container(
+                                    color: Colors.red[400],
                                   )
                                 : Image.network(
                                     "${snapshot.data['profile-img']}",
@@ -102,11 +102,14 @@ class _ChatProfilePageState extends State<ChatProfilePage> {
                                 child: ClipRRect(
                                     borderRadius: BorderRadius.circular(70),
                                     child: snapshot.data['profile-img'] == ""
-                                        ? Image.asset(
-                                            "assets/img/cute.jpeg",
-                                            height: 140,
-                                            width: 140,
-                                            fit: BoxFit.cover,
+                                        ? Container(
+                                            color: Colors.red[200],
+                                            padding: EdgeInsets.all(10),
+                                            child: Icon(
+                                              Icons.person,
+                                              size: 120,
+                                              color: Colors.white70,
+                                            ),
                                           )
                                         : Image.network(
                                             "${snapshot.data['profile-img']}",

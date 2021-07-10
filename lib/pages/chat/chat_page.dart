@@ -39,7 +39,7 @@ class _ChatPageState extends State<ChatPage> {
               context,
               MaterialPageRoute(
                   builder: (context) => ChatProfilePage(
-                        email: "andhika.smandading@gmail.com",
+                        email: "${widget.email}",
                       )));
         },
       ),

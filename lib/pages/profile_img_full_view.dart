@@ -21,9 +21,17 @@ class ProfileImgFullView extends StatelessWidget {
             //   imageUrl: imageUrl,
             // ),
             child: imageUrl == ""
-                ? Image.asset(
-                    "assets/img/cute.jpeg",
-                    fit: BoxFit.cover,
+                ? Container(
+                    decoration: BoxDecoration(
+                      color: Colors.red[200],
+                      borderRadius: BorderRadius.circular(70),
+                    ),
+                    padding: EdgeInsets.all(10),
+                    child: Icon(
+                      Icons.person,
+                      size: 120,
+                      color: Colors.white70,
+                    ),
                   )
                 : Image.network(
                     "${imageUrl}",
