@@ -165,6 +165,21 @@ class Database {
     return await snapshot.ref.getDownloadURL();
   }
 
+  Future addContact(Map<String, dynamic> data) async {
+    CollectionReference _users = _firestore
+        .collection('users')
+        .doc(_currentUser.email)
+        .collection('friends');
+
+    return _users.doc(data['email']).set({
+      'name': data['name'],
+      'email': data['email'],
+      'profile-img': "",
+      'about': 'Hello Apps',
+      'createdAt': DateTime.now(),
+    });
+  }
+
   /// Menghapus pesan
   Future deleteInfoChat(String chatRoomId) {
     return FirebaseFirestore.instance

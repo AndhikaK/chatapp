@@ -34,68 +34,6 @@ class _NewChatState extends State<NewChat> {
       ),
       body: Column(
         children: [
-          // Container(
-          //   height: 90,
-          //   width: MediaQuery.of(context).size.width,
-          //   padding: EdgeInsets.fromLTRB(12, 16, 0, 16),
-          //   child: Column(
-          //     children: [
-          //       // GestureDetector(
-          //       //   onTap: () {
-          //       //     Navigator.push(
-          //       //         context,
-          //       //         MaterialPageRoute(
-          //       //           builder: (context) => NewGroup(),
-          //       //         ));
-          //       //   },
-          //       //   child: Row(
-          //       //     children: [
-          //       //       Icon(
-          //       //         Icons.group,
-          //       //         color: Colors.grey[700],
-          //       //       ),
-          //       //       SizedBox(
-          //       //         width: 12,
-          //       //       ),
-          //       //       Text(
-          //       //         "New Group",
-          //       //         style: TextStyle(
-          //       //             fontSize: 16,
-          //       //             color: Colors.grey[700],
-          //       //             fontWeight: FontWeight.bold),
-          //       //       ),
-          //       //     ],
-          //       //   ),
-          //       // ),
-          //       Container(
-          //         child: ListTile(
-          //           leading: Icon(Icons.person),
-          //         ),
-          //       ),
-          //       SizedBox(
-          //         height: 10,
-          //       ),
-          //       Row(
-          //         children: [
-          //           Icon(
-          //             Icons.person_add_alt_1,
-          //             color: Colors.grey[700],
-          //           ),
-          //           SizedBox(
-          //             width: 12,
-          //           ),
-          //           Text(
-          //             "New Contact",
-          //             style: TextStyle(
-          //                 fontSize: 16,
-          //                 color: Colors.grey[700],
-          //                 fontWeight: FontWeight.bold),
-          //           ),
-          //         ],
-          //       ),
-          //     ],
-          //   ),
-          // ),
           Container(
             child: Column(
               children: [
@@ -145,17 +83,6 @@ class _NewChatState extends State<NewChat> {
           Expanded(
             child: ListView(
               children: [
-                NewChatBox(),
-                NewChatBox(),
-                NewChatBox(),
-                NewChatBox(),
-                NewChatBox(),
-                NewChatBox(),
-                NewChatBox(),
-                NewChatBox(),
-                NewChatBox(),
-                NewChatBox(),
-                NewChatBox(),
                 NewChatBox(),
               ],
             ),
