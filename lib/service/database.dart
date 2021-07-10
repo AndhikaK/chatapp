@@ -51,6 +51,14 @@ class Database {
     });
   }
 
+  Future editSignature(String signature) async {
+    CollectionReference _users = _firestore.collection('users');
+
+    return _users.doc(_currentUser.email).update({
+      'about': signature,
+    });
+  }
+
   Future<String> getAbout(String email) async {
     DocumentReference documentReference = _firestore.doc(email);
     String about;

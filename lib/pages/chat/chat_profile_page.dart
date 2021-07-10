@@ -48,7 +48,6 @@ class _ChatProfilePageState extends State<ChatProfilePage> {
             );
           }
 
-          print("success : ${snapshot.data['profile-img']}");
           return SingleChildScrollView(
             child: SafeArea(
               child: Container(

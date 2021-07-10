@@ -15,11 +15,6 @@ class ProfileImgFullView extends StatelessWidget {
         child: Center(
           child: Hero(
             tag: tag,
-            // child: CachedNetworkImage(
-            //   width: MediaQuery.of(context).size.width,
-            //   fit: BoxFit.contain,
-            //   imageUrl: imageUrl,
-            // ),
             child: imageUrl == ""
                 ? Container(
                     decoration: BoxDecoration(
