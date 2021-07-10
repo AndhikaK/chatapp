@@ -20,10 +20,15 @@ class ProfileImgFullView extends StatelessWidget {
             //   fit: BoxFit.contain,
             //   imageUrl: imageUrl,
             // ),
-            child: Image.asset(
-              imageUrl,
-              fit: BoxFit.contain,
-            ),
+            child: imageUrl == ""
+                ? Image.asset(
+                    "assets/img/cute.jpeg",
+                    fit: BoxFit.cover,
+                  )
+                : Image.network(
+                    "${imageUrl}",
+                    fit: BoxFit.cover,
+                  ),
           ),
         ),
         onTap: () {

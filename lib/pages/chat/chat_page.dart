@@ -6,7 +6,6 @@ import 'package:chatapp/service/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class ChatPage extends StatefulWidget {
   String name, about, email;
@@ -40,7 +39,7 @@ class _ChatPageState extends State<ChatPage> {
               context,
               MaterialPageRoute(
                   builder: (context) => ChatProfilePage(
-                        email: "frostsword21@gmail.com",
+                        email: "andhika.smandading@gmail.com",
                       )));
         },
       ),

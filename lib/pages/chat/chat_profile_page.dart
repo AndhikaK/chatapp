@@ -1,9 +1,7 @@
 import 'dart:ui';
 
 import 'package:chatapp/pages/profile_img_full_view.dart';
-import 'package:chatapp/service/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatProfilePage extends StatefulWidget {
@@ -64,12 +62,19 @@ class _ChatProfilePageState extends State<ChatProfilePage> {
                           color: Colors.grey[200],
                           child: ImageFiltered(
                             imageFilter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
-                            child: Image.asset(
-                              "assets/img/cute.jpeg",
-                              height: 200,
-                              width: MediaQuery.of(context).size.width,
-                              fit: BoxFit.cover,
-                            ),
+                            child: snapshot.data['profile-img'] == ""
+                                ? Image.asset(
+                                    "assets/img/cute.jpeg",
+                                    height: 140,
+                                    width: 140,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.network(
+                                    "${snapshot.data['profile-img']}",
+                                    width: 140,
+                                    height: 140,
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
                         ),
                         // round profile image
@@ -81,7 +86,7 @@ class _ChatProfilePageState extends State<ChatProfilePage> {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (_) {
                                   return ProfileImgFullView(
-                                    imageUrl: "assets/img/cute.jpeg",
+                                    imageUrl: "${snapshot.data['profile-img']}",
                                     tag: "profile_img",
                                   );
                                 }));
@@ -95,13 +100,20 @@ class _ChatProfilePageState extends State<ChatProfilePage> {
                                   ),
                                 ),
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(70),
-                                  child: Image.asset(
-                                    "assets/img/cute.jpeg",
-                                    fit: BoxFit.cover,
-                                    height: 140,
-                                  ),
-                                ),
+                                    borderRadius: BorderRadius.circular(70),
+                                    child: snapshot.data['profile-img'] == ""
+                                        ? Image.asset(
+                                            "assets/img/cute.jpeg",
+                                            height: 140,
+                                            width: 140,
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Image.network(
+                                            "${snapshot.data['profile-img']}",
+                                            width: 140,
+                                            height: 140,
+                                            fit: BoxFit.cover,
+                                          )),
                               ),
                             ),
                           ),

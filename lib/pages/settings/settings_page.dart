@@ -1,9 +1,4 @@
-// import 'package:chatapp/pages/change_password_page.dart';
-import 'package:chatapp/pages/detail_profile_page.dart';
-import 'package:chatapp/pages/edit_detail_page.dart';
 import 'package:chatapp/pages/settings/settings_detail_user_page.dart';
-// import 'package:chatapp/pages/edit_detail_page.dart';
-// import 'package:chatapp/pages/welcome_page.dart';
 import 'package:chatapp/service/auth.dart';
 import 'package:chatapp/service/custom_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
