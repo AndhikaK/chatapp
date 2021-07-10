@@ -68,37 +68,75 @@ class Database {
     return about;
   }
 
-  sendMessage(String message, String sender, String receiver) async {
+  sendMessage(String message, String sender, String receiver,
+      String receiverName, String profileImg) async {
     CollectionReference _chatroom = _firestore
         .collection('users')
         .doc(sender)
-        .collection('chatroom')
+        .collection('chatrooms')
         .doc(receiver)
         .collection('chat');
 
     return _chatroom.doc().set({
       'receiver': receiver,
+      'receiver-name': receiverName,
       'message': message,
       'createdAt': DateTime.now(),
+      'profile-img': profileImg
     });
   }
 
-  receiveMessage(String message, String sender, String receiver) async {
+  sendMessage2(String message, String sender, String receiver,
+      String receiverName, String profileImg) async {
+    DocumentReference _chatroom = _firestore
+        .collection('users')
+        .doc(sender)
+        .collection('chatrooms')
+        .doc(receiver);
+
+    return _chatroom.set({
+      'receiver': receiver,
+      'receiver-name': receiverName,
+      'message': message,
+      'createdAt': DateTime.now(),
+      'profile-img': profileImg
+    });
+  }
+
+  receiveMessage(String message, String sender, String receiver,
+      String receiverName, String profileImg) async {
     CollectionReference _chatroom = _firestore
         .collection('users')
         .doc(receiver)
-        .collection('chatroom')
+        .collection('chatrooms')
         .doc(sender)
         .collection('chat');
 
     return _chatroom.doc().set({
       'sender': sender,
+      'receiver-name': receiverName,
       'message': message,
       'createdAt': DateTime.now(),
+      'profile-img': profileImg
     });
   }
 
-  //dari bapenda
+  receiveMessage2(String message, String sender, String receiver,
+      String receiverName, String profileImg) async {
+    DocumentReference _chatroom = _firestore
+        .collection('users')
+        .doc(receiver)
+        .collection('chatrooms')
+        .doc(sender);
+
+    return _chatroom.set({
+      'sender': sender,
+      'receiver-name': receiverName,
+      'message': message,
+      'createdAt': DateTime.now(),
+      'profile-img': profileImg
+    });
+  }
 
   /// Membuat Chat Room
   createChatRoom(String chatRoomId, Map chatRoomInfoMap) async {
@@ -174,8 +212,8 @@ class Database {
     return _users.doc(data['email']).set({
       'name': data['name'],
       'email': data['email'],
-      'profile-img': "",
-      'about': 'Hello Apps',
+      'profile-img': data['profile-img'],
+      'about': data['about'],
       'createdAt': DateTime.now(),
     });
   }

@@ -8,8 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatefulWidget {
-  String name, about, email;
-  ChatPage({this.name, this.about, this.email});
+  String name, about, email, profileImage;
+  ChatPage({this.name, this.about, this.email, this.profileImage});
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -52,7 +52,7 @@ class _ChatPageState extends State<ChatPage> {
                   stream: FirebaseFirestore.instance
                       .collection('users')
                       .doc(_currentUser)
-                      .collection('chatroom')
+                      .collection('chatrooms')
                       .doc(_receiverUser)
                       .collection('chat')
                       .snapshots(),
@@ -152,10 +152,30 @@ class _ChatPageState extends State<ChatPage> {
                       color: Colors.red,
                     ),
                     onPressed: () {
-                      Database().sendMessage(_chatController.text,
-                          _user.currentUser.email, widget.email);
-                      Database().receiveMessage(_chatController.text,
-                          _user.currentUser.email, widget.email);
+                      Database().sendMessage(
+                          _chatController.text,
+                          _user.currentUser.email,
+                          widget.email,
+                          widget.name,
+                          widget.profileImage);
+                      Database().receiveMessage(
+                          _chatController.text,
+                          _user.currentUser.email,
+                          widget.email,
+                          widget.name,
+                          widget.profileImage);
+                      Database().sendMessage2(
+                          _chatController.text,
+                          _user.currentUser.email,
+                          widget.email,
+                          widget.name,
+                          widget.profileImage);
+                      Database().receiveMessage2(
+                          _chatController.text,
+                          _user.currentUser.email,
+                          widget.email,
+                          widget.name,
+                          widget.profileImage);
                       setState(() {
                         _chatController.clear();
                       });

@@ -97,7 +97,7 @@ class _NewChatState extends State<NewChat> {
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError) {
-                    return Text('Something went wrong');
+                    return Container();
                   }
 
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -113,7 +113,7 @@ class _NewChatState extends State<NewChat> {
                         name: data['name'],
                         email: data['email'],
                         profileImage: data['profile-img'],
-                        signature: data['signature'],
+                        signature: data['about'],
                       );
                     }).toList(),
                   );

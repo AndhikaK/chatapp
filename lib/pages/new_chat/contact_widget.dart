@@ -20,6 +20,7 @@ class ContactWidget extends StatelessWidget {
                 name: name,
                 about: signature,
                 email: email,
+                profileImage: profileImage,
               ),
             ));
       },

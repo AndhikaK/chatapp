@@ -13,9 +13,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final User _currentUser = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
-    // setState(() {});
+    final Stream<QuerySnapshot> _chatStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(_currentUser.email)
+        .collection('chatrooms')
+        .snapshots();
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         elevation: 5,
@@ -41,16 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
               "Hello ",
               style: TextStyle(fontSize: 15),
             ),
-            /* Text(
-              FirebaseAuth.instance.currentUser.email,
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w900),
-            ), */
           ],
         ),
-        /* title: Text(
-          FirebaseAuth.instance.currentUser.uid,
-          style: TextStyle(fontSize: 10),
-        ), */
         actions: [
           IconButton(icon: Icon(Icons.search), onPressed: () {}),
           IconButton(
@@ -62,49 +61,48 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('users').snapshots(),
+          stream: _chatStream,
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Container();
+            }
             if (!snapshot.hasData) {
               return Center(
                 child: CircularProgressIndicator(),
               );
             }
 
-            return ListView(
-              children: snapshot.data.docs.map((document) {
-                return Center(
-                  child: Container(
-                    child: (document['email'] !=
-                            FirebaseAuth.instance.currentUser.email)
-                        ? HomeChatBox(
-                            name: document['name'],
-                            about: document['about'],
-                            email: document['email'],
-                          )
-                        : Container(),
-                  ),
+            return new ListView(
+              children: snapshot.data.docs.map((DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data() as Map<String, dynamic>;
+                return new HomeChatBox(
+                  name: data['receiver-name'],
+                  about: data['message'],
+                  email: data['receiver'],
+                  profileImg: data['profile-img'],
                 );
               }).toList(),
+              // children: snapshot.data.docs.map((document) {
+              //   return Center(
+              //     child: Container(
+              //         child: HomeChatBox(
+              //       name: document['name'],
+              //       about: document['about'],
+              //       email: document['email'],
+              //     )),
+              //   );
+              // }).toList(),
             );
           }),
-      /* ListView(
-        children: [
-          HomeChatBox(),
-          HomeChatBox(),
-          HomeChatBox(),
-          HomeChatBox(),
-          HomeChatBox(),
-          HomeChatBox(),
-        ],
-      ), */
     );
   }
 }
 
 class HomeChatBox extends StatefulWidget {
-  String name, about, email;
-  HomeChatBox({this.name, this.about, this.email});
+  String name, about, email, profileImg;
+  HomeChatBox({this.name, this.about, this.email, this.profileImg});
 
   @override
   _HomeChatBoxState createState() => _HomeChatBoxState();
@@ -133,24 +131,54 @@ class _HomeChatBoxState extends State<HomeChatBox> {
             },
             child: Row(
               children: [
-                Container(
-                  margin: EdgeInsets.only(right: 7),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      color: Colors.red,
-                      child: Center(
-                        child: Text(
-                          widget.name.substring(0, 2).toUpperCase(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500),
-                        ),
+                // Container(
+                //   margin: EdgeInsets.only(right: 7),
+                //   child: ClipRRect(
+                //     borderRadius: BorderRadius.circular(50),
+                //     child: Container(
+                //       width: 50,
+                //       height: 50,
+                //       color: Colors.red,
+                //       child: Center(
+                //         child: Text(
+                //           widget.name.substring(0, 2).toUpperCase(),
+                //           style: TextStyle(
+                //               color: Colors.white,
+                //               fontSize: 20,
+                //               fontWeight: FontWeight.w500),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                Padding(
+                  padding: EdgeInsets.only(left: 5, right: 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      border: Border.all(
+                        color: Colors.grey[400],
+                        // width: 5,
                       ),
                     ),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(25),
+                        child: widget.profileImg == ""
+                            ? Container(
+                                color: Colors.red[400],
+                                padding: EdgeInsets.all(10),
+                                child: Icon(
+                                  Icons.person,
+                                  size: 28,
+                                  color: Colors.white70,
+                                ),
+                              )
+                            : Image.network(
+                                "${widget.profileImg}",
+                                width: 50,
+                                height: 50,
+                                fit: BoxFit.cover,
+                              )),
                   ),
                 ),
                 Expanded(
