@@ -1,6 +1,7 @@
 import 'package:chatapp/service/custom_localization.dart';
 import 'package:chatapp/service/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class NewContactPage extends StatefulWidget {
@@ -11,6 +12,8 @@ class NewContactPage extends StatefulWidget {
 class _NewContactPageState extends State<NewContactPage> {
   final _formKey = GlobalKey<FormState>();
   final _searchUserController = TextEditingController();
+
+  final User _currentUser = FirebaseAuth.instance.currentUser;
 
   Map<String, dynamic> _userContact;
 
@@ -132,6 +135,7 @@ class _NewContactPageState extends State<NewContactPage> {
                           ElevatedButton(
                               onPressed: () {
                                 addContact();
+                                Navigator.pop(context);
                               },
                               style: ButtonStyle(
                                 backgroundColor:
@@ -172,6 +176,8 @@ class _NewContactPageState extends State<NewContactPage> {
     try {
       print("add contact success");
       Database().addContact(_userContact);
+      // Database().firstSendMessage(_userContact, _currentUser.email);
+      // Database().firstReceiveMessage(_userContact, _currentUser.email);
     } catch (e) {
       print("add contact failed : $e");
     }

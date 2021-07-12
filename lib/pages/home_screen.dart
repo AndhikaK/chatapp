@@ -65,7 +65,9 @@ class _HomeScreenState extends State<HomeScreen> {
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
-              return Container();
+              return Container(
+                child: Text('Error'),
+              );
             }
             if (!snapshot.hasData) {
               return Center(
@@ -78,11 +80,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 Map<String, dynamic> data =
                     document.data() as Map<String, dynamic>;
                 return new HomeChatBox(
-                  name: data['receiver-name'],
-                  about: data['message'],
-                  email: data['receiver'],
+                  name: data['partnerEmail'],
+                  /* about: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(_currentUser.email)
+                      .collection(_currentUser.email)
+                      .doc('about'), */
+                  lastMessage: data['lastMessage'],
+                  email: data['partnerEmail'],
+                  lastTimeMessage: data['lastMessageTime']
+                      .toDate()
+                      .toString()
+                      .substring(11, 16),
                   profileImg: data['profile-img'],
                 );
+                // return Container(child: Text(data['email']));
               }).toList(),
               // children: snapshot.data.docs.map((document) {
               //   return Center(
@@ -101,8 +113,14 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomeChatBox extends StatefulWidget {
-  String name, about, email, profileImg;
-  HomeChatBox({this.name, this.about, this.email, this.profileImg});
+  String name, about, lastMessage, email, lastTimeMessage, profileImg;
+  HomeChatBox(
+      {this.name,
+      this.about,
+      this.lastMessage,
+      this.email,
+      this.lastTimeMessage,
+      this.profileImg});
 
   @override
   _HomeChatBoxState createState() => _HomeChatBoxState();
@@ -124,7 +142,6 @@ class _HomeChatBoxState extends State<HomeChatBox> {
                   MaterialPageRoute(
                     builder: (context) => ChatPage(
                       name: widget.name,
-                      about: widget.about,
                       email: widget.email,
                     ),
                   ));
@@ -163,7 +180,8 @@ class _HomeChatBoxState extends State<HomeChatBox> {
                     ),
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(25),
-                        child: widget.profileImg == ""
+                        child: (widget.profileImg == "" ||
+                                widget.profileImg == null)
                             ? Container(
                                 color: Colors.red[400],
                                 padding: EdgeInsets.all(10),
@@ -211,7 +229,7 @@ class _HomeChatBoxState extends State<HomeChatBox> {
                                   width: 3,
                                 ),
                                 Text(
-                                  "7:57 am",
+                                  widget.lastTimeMessage,
                                   style: TextStyle(
                                       color: Colors.grey[600], fontSize: 10),
                                 ),
@@ -224,7 +242,7 @@ class _HomeChatBoxState extends State<HomeChatBox> {
                         height: 5,
                       ),
                       Text(
-                        widget.about,
+                        widget.lastMessage,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(color: Colors.grey[600], fontSize: 12),
                       ),

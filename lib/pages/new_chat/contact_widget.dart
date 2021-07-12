@@ -18,7 +18,7 @@ class ContactWidget extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => ChatPage(
                 name: name,
-                about: signature,
+                // about: signature,
                 email: email,
                 profileImage: profileImage,
               ),

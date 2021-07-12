@@ -8,8 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatefulWidget {
-  String name, about, email, profileImage;
-  ChatPage({this.name, this.about, this.email, this.profileImage});
+  String name, email, profileImage;
+  ChatPage({this.name, this.email, this.profileImage});
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -18,13 +18,13 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   TextEditingController _chatController = new TextEditingController();
   FirebaseAuth _user = FirebaseAuth.instance;
-  String _currentUser = FirebaseAuth.instance.currentUser.email;
-  String _receiverUser;
-  @override
+  final User _currentUser = FirebaseAuth.instance.currentUser;
+
+  /* @override
   void initState() {
     _receiverUser = widget.email;
     super.initState();
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +51,11 @@ class _ChatPageState extends State<ChatPage> {
               child: StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection('users')
-                      .doc(_currentUser)
+                      .doc(_currentUser.email)
                       .collection('chatrooms')
-                      .doc(_receiverUser)
+                      .doc(widget.email)
                       .collection('chat')
+                      .orderBy('createdAt')
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -68,12 +69,37 @@ class _ChatPageState extends State<ChatPage> {
                       children: snapshot.data.docs.map((document) {
                         return Center(
                           child: Container(
-                            child: SendMessage(
-                                chat: document["message"],
-                                clock: document["createdAt"]
-                                    .toDate()
-                                    .toString()
-                                    .substring(11, 16)),
+                            child: GestureDetector(
+                                onTap: () {
+                                  print('XXXXXXXXXX');
+                                  print(snapshot.data.docs.asMap()['sender']);
+                                  print(document['sender']);
+                                },
+                                child:
+                                    (document['sender'] == _currentUser.email)
+                                        ? SendMessage(
+                                            chat: document["message"],
+                                            clock: document["createdAt"]
+                                                .toDate()
+                                                .toString()
+                                                .substring(11, 16),
+                                          )
+                                        : ReceiveMessage(
+                                            chat: document["message"],
+                                            clock: document["createdAt"]
+                                                .toDate()
+                                                .toString()
+                                                .substring(11, 16),
+                                          )
+                                /* Text(
+                                document['message'],
+                                style: TextStyle(
+                                    color: (document['sender'] ==
+                                            _currentUser.email)
+                                        ? Colors.red
+                                        : Colors.black),
+                              ), */
+                                ),
                           ),
                         );
 
@@ -156,25 +182,21 @@ class _ChatPageState extends State<ChatPage> {
                           _chatController.text,
                           _user.currentUser.email,
                           widget.email,
-                          widget.name,
                           widget.profileImage);
                       Database().receiveMessage(
                           _chatController.text,
                           _user.currentUser.email,
                           widget.email,
-                          widget.name,
                           widget.profileImage);
                       Database().sendMessage2(
                           _chatController.text,
                           _user.currentUser.email,
                           widget.email,
-                          widget.name,
                           widget.profileImage);
                       Database().receiveMessage2(
                           _chatController.text,
                           _user.currentUser.email,
                           widget.email,
-                          widget.name,
                           widget.profileImage);
                       setState(() {
                         _chatController.clear();

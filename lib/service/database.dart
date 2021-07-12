@@ -68,8 +68,8 @@ class Database {
     return about;
   }
 
-  sendMessage(String message, String sender, String receiver,
-      String receiverName, String profileImg) async {
+  sendMessage(
+      String message, String sender, String receiver, String profileImg) async {
     CollectionReference _chatroom = _firestore
         .collection('users')
         .doc(sender)
@@ -78,33 +78,16 @@ class Database {
         .collection('chat');
 
     return _chatroom.doc().set({
+      'sender': sender,
       'receiver': receiver,
-      'receiver-name': receiverName,
       'message': message,
       'createdAt': DateTime.now(),
       'profile-img': profileImg
     });
   }
 
-  sendMessage2(String message, String sender, String receiver,
-      String receiverName, String profileImg) async {
-    DocumentReference _chatroom = _firestore
-        .collection('users')
-        .doc(sender)
-        .collection('chatrooms')
-        .doc(receiver);
-
-    return _chatroom.set({
-      'receiver': receiver,
-      'receiver-name': receiverName,
-      'message': message,
-      'createdAt': DateTime.now(),
-      'profile-img': profileImg
-    });
-  }
-
-  receiveMessage(String message, String sender, String receiver,
-      String receiverName, String profileImg) async {
+  receiveMessage(
+      String message, String sender, String receiver, String profileImg) async {
     CollectionReference _chatroom = _firestore
         .collection('users')
         .doc(receiver)
@@ -114,27 +97,44 @@ class Database {
 
     return _chatroom.doc().set({
       'sender': sender,
-      'receiver-name': receiverName,
+      'receiver': receiver,
       'message': message,
       'createdAt': DateTime.now(),
       'profile-img': profileImg
     });
   }
 
-  receiveMessage2(String message, String sender, String receiver,
-      String receiverName, String profileImg) async {
+  sendMessage2(String lastMessage, String myEmail, String partnerEmail,
+      String profileImg) async {
     DocumentReference _chatroom = _firestore
         .collection('users')
-        .doc(receiver)
+        .doc(myEmail)
         .collection('chatrooms')
-        .doc(sender);
+        .doc(partnerEmail);
 
     return _chatroom.set({
-      'sender': sender,
-      'receiver-name': receiverName,
-      'message': message,
-      'createdAt': DateTime.now(),
-      'profile-img': profileImg
+      'myEmail': myEmail,
+      'partnerEmail': partnerEmail,
+      'lastMessage': lastMessage,
+      'lastMessageTime': DateTime.now(),
+      'partnerProfile-img': profileImg
+    });
+  }
+
+  receiveMessage2(String lastMessage, String myEmail, String partnerEmail,
+      String profileImg) async {
+    DocumentReference _chatroom = _firestore
+        .collection('users')
+        .doc(partnerEmail)
+        .collection('chatrooms')
+        .doc(myEmail);
+
+    return _chatroom.set({
+      'myEmail': partnerEmail,
+      'partnerEmail': myEmail,
+      'lastMessage': lastMessage,
+      'lastMessageTime': DateTime.now(),
+      'partnerProfile-img': profileImg
     });
   }
 
