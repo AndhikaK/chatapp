@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
             return HomeScreen();
           } else {
             print('akun belum masuk');
-            return WelcomePage();
+            return SplashScreen();
           }
         },
       ),
