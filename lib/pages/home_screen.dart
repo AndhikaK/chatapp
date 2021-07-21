@@ -127,6 +127,14 @@ class HomeChatBox extends StatefulWidget {
 }
 
 class _HomeChatBoxState extends State<HomeChatBox> {
+  String getName(String name) {
+    if (name.length >= 17) {
+      return "${name.substring(0, 17)}...";
+    }
+
+    return name;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -207,7 +215,7 @@ class _HomeChatBoxState extends State<HomeChatBox> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            widget.name,
+                            "${getName(widget.name)}",
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 20,
