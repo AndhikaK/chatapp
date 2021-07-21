@@ -34,6 +34,18 @@ class Database {
     });
   }
 
+  Future addEmailRegisteredUser(email) async {
+    CollectionReference _users = _firestore.collection('users');
+
+    return _users.doc(email).set({
+      'name': email,
+      'email': email,
+      'about': 'Hello Apps',
+      'createdAt': DateTime.now(),
+      'profile-img': "",
+    });
+  }
+
   Future editUser(String email, String name, String about) async {
     CollectionReference _users = _firestore.collection('users');
 

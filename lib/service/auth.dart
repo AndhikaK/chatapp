@@ -152,6 +152,29 @@ class Auth {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+
+      User _currentUser = FirebaseAuth.instance.currentUser;
+
+      // print(Database().getAbout(_currentUser.email));
+      try {
+        var ref = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(_currentUser.email)
+            .get();
+        if (ref.exists) {
+          print("data exist on firestore");
+        } else {
+          print("data does not exist on firestore T_T");
+          Database()
+              .addEmailRegisteredUser(FirebaseAuth.instance.currentUser.email);
+        }
+      } catch (e) {
+        print("Login error: ${e}");
+
+        Database()
+            .addGoogleRegisteredUser(FirebaseAuth.instance.currentUser.email);
+      }
+
       Future.delayed(const Duration(milliseconds: 500), () {
         RestartWidget.restartApp(buildContext);
       });
